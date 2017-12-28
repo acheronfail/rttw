@@ -120,7 +120,6 @@ class App extends Component {
     const makeItem = itemCreator('color');
     return puzzles.map(({ name }, i) => {
       const existing = getUserSolution(i, userInfo);
-      console.log(name, existing);
       return makeItem(`${i}`, name, completedIds.includes(i), {
         statusText: existing && existing.solution.length + ' byte(s)',
         isSelected: i === this.state.index,
