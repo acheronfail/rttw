@@ -9,19 +9,50 @@ html, body {
   align-items: center;
 }
 
-.App {
-  height: 640px;
-  width: 1024px;
-  max-width: 1024px;
-  box-shadow: 0 0 15px #222;
-}
-
-.App main {
-  padding: 15px;
-}
-
 .CodeMirror {
   border: 1px solid #444;
+}
+
+#result {
+  border: 1px solid #444;
+  background-color: #f7f7f7;
+  height: 40px;
+  padding: 10px;
+}
+
+.App {
+  width: 1024px;
+  max-width: 1024px;
+  box-shadow: 0 5px 15px #222;
+  border-radius: 5px;
+}
+
+.App main, .App nav {
+  padding: 10px;
+}
+
+.App nav .list {
+  height: 350px;
+  overflow: scroll;
+  border: 1px solid #444;
+}
+
+/* atlaskit hack */
+.App nav .list > div > label { display: none; }
+
+.container {
+  position: relative;
+  display: flex;
+}
+
+.App .container main {
+  order: 1;
+  flex: 4;
+}
+
+.App .container nav {
+  order: 1;
+  flex: 1;
 }
 
 .App-logo {

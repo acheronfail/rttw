@@ -1,0 +1,29 @@
+import React from 'react';
+import Lozenge from '@atlaskit/lozenge';
+
+export const itemCreator = (name) => (value, label, done, extra = {}) => ({
+    name,
+    value,
+    label: (
+        <span>
+            <Lozenge appearance={done ? 'success' : 'default'}>
+                {done ? 'solved' : 'unsolved'}
+            </Lozenge>
+            &nbsp;
+            {label}
+        </span>
+    ),
+    ...extra
+});
+
+
+// General helpers
+export const cycleArray = (arr, i) => (i % arr.length + arr.length) % arr.length;
+
+// CodeMirror helpers
+export const firstPos = () => ({ line: 0, ch: 0 });
+export const lastPos = (cm) => {
+    let line = cm.lastLine();
+    let ch = cm.getLine(line).length;
+    return { line, ch };
+}

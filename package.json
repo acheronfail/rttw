@@ -4,8 +4,13 @@
   "private": true,
   "dependencies": {
     "@atlaskit/button": "^6.2.0",
+    "@atlaskit/css-reset": "^1.1.7",
+    "@atlaskit/field-radio-group": "^1.7.5",
+    "@atlaskit/lozenge": "^3.4.10",
+    "@atlaskit/modal-dialog": "^3.2.6",
+    "@atlaskit/tooltip": "^8.0.12",
     "codemirror": "^5.33.0",
-    "notevil": "^1.1.0",
+    "debounce": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
