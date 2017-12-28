@@ -1,0 +1,117 @@
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App {
+  height: 640px;
+  width: 1024px;
+  max-width: 1024px;
+  box-shadow: 0 0 15px #222;
+}
+
+.App main {
+  padding: 15px;
+}
+
+.CodeMirror {
+  border: 1px solid #444;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 2s linear;
+  width: 200px;
+  height: 50px;
+  color: yellow;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.App-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
+  100% { transform: rotate(360deg); filter: hue-rotate(360deg); }
+}
+
+/* inspired by buttons in https://github.com/electron/electron-api-demos */
+.rainbow-wrapper {
+  --rainbow-button-width: 200px;
+  --rainbow-button-height: 50px;
+  --rainbow-button-width-inner: 194px;
+  --rainbow-button-height-inner: 44px;
+  --rainbow-color-1: hsl(116, 30%, 36%);
+  --rainbow-color-2: hsl(194, 60%, 36%);
+  --rainbow-color-3: hsl(222, 53%, 50%);
+  --rainbow-color-4: hsl(285, 47%, 46%);
+  --rainbow-color-5: hsl(330, 65%, 48%);
+  --rainbow-color-6: hsl(32, 79%, 49%);
+  --rainbow-color-7: hsl(53, 84%, 50%);
+
+  display: inline-block;
+  width: var(--rainbow-button-width);
+  height: var(--rainbow-button-height);
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.rainbow-wrapper:before {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: var(--rainbow-button-height);
+  background: #CCC;
+  background: linear-gradient(to right, var(--rainbow-color-1) 0%, var(--rainbow-color-2) 14%, var(--rainbow-color-3) 28%, var(--rainbow-color-4) 42%, var(--rainbow-color-5) 56%, var(--rainbow-color-6) 70%, var(--rainbow-color-7) 84%, var(--rainbow-color-1) 100%);
+  background-position: -200px 0;
+  transition: all 0.5s;
+  content: "";
+}
+
+.rainbow-wrapper * {
+  display: block;
+  width: var(--rainbow-button-width-inner);
+  height: var(--rainbow-button-height-inner);
+  position: absolute;
+  z-index: 3;
+  top: 3px;
+  left: 3px;
+  border: none;
+  border-radius: 4px;
+  background: white;
+  color: black;
+  font-size: 1.3rem;
+}
+
+.rainbow-wrapper:hover:before {
+  background-position: 200px 0;
+}
