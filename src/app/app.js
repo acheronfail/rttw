@@ -31,6 +31,12 @@ class App extends Component {
     if (window.confirm('This will reset all your data. Continue?')) {
       clearUserInfo();
       this.openPuzzle(0);
+
+      // Restart logo CSS animation
+      const logo = document.querySelector('.App-logo');
+      logo.classList.remove('App-logo');
+      void logo.offsetWidth;
+      logo.classList.add('App-logo');
     }
   }
 
