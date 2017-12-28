@@ -115,13 +115,18 @@ class App extends Component {
 
   // Generates the items for the side nav
   getNavItems() {
-    const { completed } = getUserInfo();
-    const completedIds = completed.map(x => x.index);
+    const userInfo = getUserInfo();
+    const completedIds = userInfo.completed.map(x => x.index);
     const makeItem = itemCreator('color');
-    return puzzles.map(({ name }, i) => makeItem(`${i}`, name, completedIds.includes(i), {
-      isSelected: i === this.state.index,
-      isDisabled: i > completed.length + 2
-    }));
+    return puzzles.map(({ name }, i) => {
+      const existing = getUserSolution(i, userInfo);
+      console.log(name, existing);
+      return makeItem(`${i}`, name, completedIds.includes(i), {
+        statusText: existing && existing.solution.length + ' byte(s)',
+        isSelected: i === this.state.index,
+        isDisabled: i > userInfo.completed.length + 2
+      });
+    });
   }
 
   // Retrieves the user's solution

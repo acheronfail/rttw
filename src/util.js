@@ -7,7 +7,7 @@ export const itemCreator = (name) => (value, label, done, extra = {}) => ({
     label: (
         <span>
             <Lozenge appearance={done ? 'success' : 'default'}>
-                {done ? 'solved' : 'unsolved'}
+                {done ? (extra.statusText || 'solved') : 'unsolved'}
             </Lozenge>
             &nbsp;
             {label}
