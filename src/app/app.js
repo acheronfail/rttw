@@ -28,10 +28,10 @@ class App extends Component {
 
   // Reloads the window and clears the user's progress
   resetApp() {
-    clearUserInfo();
-    setTimeout(() => {
+    if (window.confirm('This will reset all your data?')) {
+      clearUserInfo();
       this.openPuzzle(0);
-    }, 0);
+    }
   }
 
   // Resets the required parts of state to change to another puzzle
@@ -200,13 +200,17 @@ class App extends Component {
             <div ref={c => this.editorEl = c}></div>
             <pre id="result" style={{ color: error ? '#a00' : 'inherit' }}>Result: {result}</pre>
             {modalOpen && (
-              <Modal actions={modalActions} onClose={() => {}} heading="Congratulations! 🎉">
-                You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
-                <br />
-                That's your shortest solution yet: <strong>{this.getSolution().length} byte(s)</strong> 👌
-                <br />
-                <br />
-                You can move on to the next puzzle, or try to find an even shorter answer for this one.
+              <Modal 
+                actions={modalActions}
+                onClose={() => {}}
+                heading="Congratulations! 🎉"
+                autoFocus={true}
+              >
+                  You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
+                  <br />
+                  That's your shortest solution yet: <strong>{this.getSolution().length} byte(s)</strong> 👌
+                  <br /><br />
+                  You can move on to the next puzzle, or try to find an even shorter answer for this one.
               </Modal>
             )}
           </main>
