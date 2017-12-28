@@ -14,7 +14,7 @@ import 'codemirror/lib/codemirror.css';
 import { cycleArray, firstPos, lastPos, itemCreator } from '../util';
 import { puzzles } from '../puzzles';
 
-import { getUserInfo, setUserInfo, getUserSolution } from '../user';
+import { getUserInfo, setUserInfo, clearUserInfo, getUserSolution } from '../user';
 
 const EVAL_WAIT_TIME = 300;
 
@@ -28,16 +28,19 @@ class App extends Component {
 
   // Reloads the window and clears the user's progress
   resetApp() {
-    localStorage.clear();
-    window.location.reload();
+    clearUserInfo();
+    setTimeout(() => {
+      this.openPuzzle(0);
+    }, 0);
   }
 
   // Resets the required parts of state to change to another puzzle
-  resetState() {
+  resetState(extra = {}) {
     this.setState({
       modalOpen: false,
       result: '',
-      error: false
+      error: false,
+      ...extra
     });
 
     return this;
@@ -126,7 +129,7 @@ class App extends Component {
   // Opens the puzzle at the given index, prefilling it with the user's previous solution (if any)
   openPuzzle(index) {
     this.editableRegion = null;
-    this.resetState().setState({ index });
+    this.resetState({ index });
     
     const { source, name } = puzzles[index];
     const answer = getUserSolution(index);
