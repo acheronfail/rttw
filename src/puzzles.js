@@ -16,6 +16,10 @@ export const puzzles = [
         source: `function counter(f) {\n    var a = f(), b = f()\n    return a() == 1 && a() == 2 && a() == 3\n        && b() == 1 && b() == 2;\n}`
     },
     {
+        name: 'infinity',
+        source: `function infinity(x, y) {\n    return x === y && 1/x < 1/y \n}`
+    },
+    {
         name: 'peano',
         source: `function peano(x) {\n    return (x++ !== x) && (x++ === x);\n}`
     },
@@ -90,10 +94,6 @@ export const puzzles = [
     {
         name: 'native',
         source: `const toString = Function.prototype.toString;\nfunction native(x) {\n    return (x() === 1) && (x.toString() === 'function () { [native code] }') && (toString.call(x) === x.toString())\n}`
-    },
-    {
-        name: 'infinity',
-        source: `function infinity(x, y) {\n    return x === y && 1/x < 1/y \n}`
     },
     {
         name: 'stringable',

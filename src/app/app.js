@@ -215,7 +215,7 @@ class App extends Component {
               >
                   You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
                   <br />
-                  That's your shortest solution yet: <strong>{this.getSolution().length} byte(s)</strong> 👌
+                  That's your shortest solution yet: <strong>{this.getSolution().length} bytes</strong> 👌
                   <br /><br />
                   You can move on to the next puzzle, or try to find an even shorter answer for this one.
               </Modal>
