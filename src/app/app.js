@@ -54,7 +54,7 @@ class App extends Component {
 
   componentDidMount() {
     // Instantiate and prepare CodeMirror.
-    const cm = this.cm = new CodeMirror(this.editorEl, {
+    this.cm = new CodeMirror(this.editorEl, {
       showCursorWhenSelecting: true,
       indentWithTabs: true,
       lineNumbers: true,
@@ -63,7 +63,7 @@ class App extends Component {
     });
     
     // Run code on changes and reflect result
-    cm.on('changes', debounce(() => {
+    this.cm.on('changes', debounce(() => {
       const solution = this.getSolution();
       if (solution && solution.length > 0) {
         const iframe = document.createElement('iframe');
@@ -71,7 +71,7 @@ class App extends Component {
         delete iframe.contentWindow.frameElement;
 
         try {
-          const result = JSON.stringify(iframe.contentWindow.eval(cm.getValue()));
+          const result = JSON.stringify(iframe.contentWindow.eval(this.cm.getValue()));
           const passed = result === 'true';
 
           // TODO: make a much better way of handling storage and user info!!!
@@ -105,7 +105,6 @@ class App extends Component {
       }
     }, EVAL_WAIT_TIME));
 
-    
     // Start at first unsolved puzzle
     const completedIds = getUserInfo().completed.map(x => x.index);
     let firstUnsolved = completedIds.findIndex((x, i) => x !== i);
@@ -121,7 +120,7 @@ class App extends Component {
     return puzzles.map(({ name }, i) => {
       const existing = getUserSolution(i, userInfo);
       return makeItem(`${i}`, name, completedIds.includes(i), {
-        statusText: existing && existing.solution.length + ' byte(s)',
+        statusText: existing && existing.solution.length + ' bytes',
         isSelected: i === this.state.index,
         isDisabled: i > userInfo.completed.length + 2
       });
