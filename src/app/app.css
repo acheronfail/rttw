@@ -20,7 +20,7 @@ html, body {
   padding: 10px;
 }
 
-.App {
+.app {
   width: 1024px;
   max-width: 1024px;
   box-shadow: 0 5px 15px #222;
@@ -28,36 +28,36 @@ html, body {
   animation: bounceIn 750ms ease-in;
 }
 
-.App main, .App nav {
+.app main, .app nav {
   padding: 10px;
 }
 
-.App nav .list {
+.app nav .list {
   height: 350px;
   overflow: scroll;
   border: 1px solid #444;
 }
 
 /* atlaskit hack */
-.App nav .list > div > label { display: none; }
+.app nav .list > div > label { display: none; }
 
 .container {
   position: relative;
   display: flex;
 }
 
-.App .container main {
+.app .container main {
   order: 1;
   flex: 4;
 }
 
-.App .container nav {
+.app .container nav {
   order: 1;
   flex: 1;
 }
 
-.App-logo {
-  animation: App-logo-spin 1.5s ease-in-out;
+.app-logo {
+  animation: app-logo-spin 1.5s ease-in-out;
   width: 200px;
   height: 50px;
   color: yellow;
@@ -68,7 +68,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-.App-header {
+.app-header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,15 +79,15 @@ html, body {
   color: white;
 }
 
-.App-title {
+.app-title {
   font-size: 1.5em;
 }
 
-.App-intro {
+.app-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
   from {
     transform-origin: center;
     transform: rotate3d(0, 0, 1, -200deg);

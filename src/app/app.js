@@ -11,7 +11,7 @@ import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
 
-import { cycleArray, firstPos, lastPos, itemCreator } from '../util';
+import { cycleArray, firstPos, lastPos, itemCreator, resetCSSAnimation } from '../util';
 import { puzzles } from '../puzzles';
 
 import { getUserInfo, setUserInfo, clearUserInfo, getUserSolution } from '../user';
@@ -33,10 +33,8 @@ class App extends Component {
       this.openPuzzle(0);
 
       // Restart logo CSS animation
-      const logo = document.querySelector('.App-logo');
-      logo.classList.remove('App-logo');
-      void logo.offsetWidth;
-      logo.classList.add('App-logo');
+      resetCSSAnimation('app-logo');
+      resetCSSAnimation('app');
     }
   }
 
@@ -193,14 +191,14 @@ class App extends Component {
     ];
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="App-logo">
+      <div className="app">
+        <header className="app-header">
+          <div className="app-logo">
             <code>true</code>
           </div>
           <ToolTip content="Click this to reset everything!" position="right">
             <div className="rainbow-wrapper">
-              <button onClick={() => this.resetApp()} className="App-title">Return true to win!</button>
+              <button onClick={() => this.resetApp()} className="app-title">Return true to win!</button>
             </div>
           </ToolTip>
         </header>
