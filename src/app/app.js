@@ -28,7 +28,7 @@ class App extends Component {
 
   // Reloads the window and clears the user's progress
   resetApp() {
-    if (window.confirm('This will reset all your data?')) {
+    if (window.confirm('This will reset all your data. Continue?')) {
       clearUserInfo();
       this.openPuzzle(0);
     }

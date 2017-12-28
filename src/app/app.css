@@ -56,7 +56,7 @@ html, body {
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 2s linear;
+  animation: App-logo-spin 1.5s ease-in-out;
   width: 200px;
   height: 50px;
   color: yellow;
@@ -87,8 +87,18 @@ html, body {
 }
 
 @keyframes App-logo-spin {
-  0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
-  100% { transform: rotate(360deg); filter: hue-rotate(360deg); }
+  from {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+    filter: hue-rotate(0deg);
+  }
+  to {
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+    filter: hue-rotate(360deg);
+  }
 }
 
 /* inspired by buttons in https://github.com/electron/electron-api-demos */
