@@ -1,39 +1,26 @@
 {
-  "name": "rttw",
-  "version": "0.1.0",
-  "homepage": "https://acheronfail.github.io/rttw",
-  "private": true,
-  "dependencies": {
-    "@atlaskit/button": "^6.2.0",
-    "@atlaskit/css-reset": "^1.1.7",
-    "@atlaskit/field-radio-group": "^1.7.5",
-    "@atlaskit/lozenge": "^3.4.10",
-    "@atlaskit/modal-dialog": "^3.2.6",
-    "@atlaskit/tooltip": "^8.0.12",
-    "codemirror": "^5.33.0",
-    "debounce": "^1.1.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
-    "prettier": "^1.9.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
-  },
-  "devDependencies": {
-    "gh-pages": "^1.1.0"
-  },
-  "scripts": {
-    "precommit": "lint-staged",
-    "start": "REACT_APP_VERSION=$npm_package_version BROWSER=0 react-scripts start",
-    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "yarn build && gh-pages -d build"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --arrow-parens always --print-width 100 --write",
-      "git add"
-    ]
-  }
+    "name": "rttw-server",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "express": "^4.16.2"
+    },
+    "devDependencies": {
+        "concurrently": "^3.5.1",
+        "husky": "^0.14.3",
+        "lint-staged": "^6.0.0",
+        "prettier": "^1.9.2"
+    },
+    "scripts": {
+        "precommit": "lint-staged",
+        "start": "concurrently \"yarn server\" \"yarn client start\"",
+        "server": "node server/index.js",
+        "client": "node scripts/run-in-client.js"
+    },
+    "lint-staged": {
+        "{server,client/src}/**/*.{js,jsx,json,css}": [
+            "prettier --single-quote --arrow-parens always --print-width 100 --write",
+            "git add"
+        ]
+    }
 }
