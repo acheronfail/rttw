@@ -72,9 +72,9 @@ export default class App extends Component {
         delete iframe.contentWindow.frameElement;
 
         try {
-          const funcName = puzzles[this.state.index].name;
-          const [codeFunc, codeCall] = this.cm.getValue().split(new RegExp(`(?=\\n${funcName}\\()`));
-          const code = `(function () {\n${codeFunc}\nwindow['${funcName}'] = ${funcName};\n})();${codeCall}`;
+          const { name: fn } = puzzles[this.state.index];
+          const [puzzle, call] = this.cm.getValue().split(new RegExp(`(?=\\n${fn}\\()`));
+          const code = `(function () {\n${puzzle}\nwindow['${fn}'] = ${fn};\n})();\n${call}`;
           const result = JSON.stringify(iframe.contentWindow.eval(code));
           const passed = result === 'true';
 
