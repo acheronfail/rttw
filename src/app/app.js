@@ -189,6 +189,12 @@ class App extends Component {
       { text: 'Next Puzzle', onClick: () => this.cycle(1) }
     ];
 
+    let length = 0;
+    {
+      let solution = this.getSolution();
+      if (solution) length = solution.length;
+    }
+
     return (
       <div className="app">
         <header className="app-header">
@@ -204,7 +210,11 @@ class App extends Component {
         <div className="container">
           <main>
             <div ref={c => this.editorEl = c}></div>
-            <pre id="result" style={{ color: error ? '#a00' : 'inherit' }}>Result: {result}</pre>
+            <pre id="result" style={{ color: error ? '#a00' : 'inherit' }}>
+              Result: {result}
+              <br />
+              Bytecount: {length}
+            </pre>
             {modalOpen && (
               <Modal 
                 actions={modalActions}
@@ -214,7 +224,7 @@ class App extends Component {
               >
                   You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
                   <br />
-                  That's your shortest solution yet: <strong>{this.getSolution().length} bytes</strong> 👌
+                  That's your shortest solution yet: <strong>{length} bytes</strong> 👌
                   <br /><br />
                   You can move on to the next puzzle, or try to find an even shorter answer for this one.
               </Modal>
