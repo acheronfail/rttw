@@ -116,6 +116,9 @@ export default class App extends Component {
     let firstUnsolved = completedIds.findIndex((x, i) => x !== i);
     if (firstUnsolved === -1) firstUnsolved = completedIds.length;
     this.openPuzzle(firstUnsolved);
+
+    // Fade in hidden elements
+    document.querySelector('.site-footer').classList.add('show');
   }
 
   // Generates the items for the side nav
