@@ -58,16 +58,16 @@ export default class App extends Component {
       indentUnit: 4,
       tabSize: 4
     });
-    
+
     // Run code on changes and reflect result
-    this.cm.on('changes', debounce(() => {
+    const onChanges = debounce(() => {
       const solution = this.getSolution();
       if (solution && solution.length > 0) {
-        // Run code in a "semi"-sandboxed env via iframe - the user can still hang the app with 
+        // Run code in a "semi"-sandboxed env via iframe - the user can still hang the app with
         // infinite loops and such, but this means breaking the current page is a little less likely
         const iframe = document.createElement('iframe');
         document.body.appendChild(iframe);
-        
+
         // Remove reference to parent element
         delete iframe.contentWindow.frameElement;
 
@@ -107,11 +107,12 @@ export default class App extends Component {
       } else {
         this.resetState();
       }
-    }, EVAL_WAIT_TIME));
+    }, EVAL_WAIT_TIME);
+    this.cm.on('changes', onChanges);
 
     // Start at first unsolved puzzle
     // We keep the `userInfo.completed` array sorted so we can do this simple check
-    const completedIds = getUserInfo().completed.map(x => x.index);
+    const completedIds = getUserInfo().completed.map((x) => x.index);
     let firstUnsolved = completedIds.findIndex((x, i) => x !== i);
     if (firstUnsolved === -1) firstUnsolved = completedIds.length;
     this.openPuzzle(firstUnsolved);
@@ -120,7 +121,7 @@ export default class App extends Component {
   // Generates the items for the side nav
   getNavItems() {
     const userInfo = getUserInfo();
-    const completedIds = userInfo.completed.map(x => x.index);
+    const completedIds = userInfo.completed.map((x) => x.index);
     const makeItem = itemCreator('puzzle');
     return puzzles.map(({ name }, i) => {
       const existing = getUserSolution(i, userInfo);
@@ -144,7 +145,7 @@ export default class App extends Component {
   openPuzzle(index) {
     this.editableRegion = null;
     this.resetState({ index });
-    
+
     const { source, name } = puzzles[index];
     const answer = getUserSolution(index);
 
@@ -156,8 +157,9 @@ export default class App extends Component {
     const getPos = (i) => this.cm.posFromIndex(i);
 
     // Start and end positions of the editable region
-    const start = before.length, end = before.length + editable.length;
-    
+    const start = before.length;
+    const end = before.length + editable.length;
+
     // Mark first part of text as read only
     this.cm.markText(firstPos(), getPos(start + 1), {
       inclusiveLeft: true,
@@ -198,7 +200,9 @@ export default class App extends Component {
         </div>
         <ToolTip content="Click this to reset everything!" position="right">
           <div className="rainbow-wrapper">
-            <button onClick={() => this.resetApp()} className="app-title">Return true to win!</button>
+            <button onClick={() => this.resetApp()} className="app-title">
+              Return true to win!
+            </button>
           </div>
         </ToolTip>
       </header>
@@ -215,13 +219,14 @@ export default class App extends Component {
       <Modal
         autoFocus={true}
         actions={modalActions}
-        onClose={() => { }}
+        onClose={() => {}}
         heading="Congratulations! 🎉"
       >
         You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
         <br />
         That's your shortest solution yet: <strong>{length} bytes</strong> 👌
-        <br /><br />
+        <br />
+        <br />
         You can move on to the next puzzle, or try to find an even shorter answer for this one.
       </Modal>
     );
@@ -255,7 +260,7 @@ export default class App extends Component {
         {this.renderHeader()}
         <div className="container">
           <main>
-            <div ref={c => this.editorEl = c}></div>
+            <div ref={(c) => (this.editorEl = c)} />
             <pre id="result" style={{ color: error ? '#a00' : 'inherit' }}>
               Result: {result}
               <br />
@@ -268,4 +273,4 @@ export default class App extends Component {
       </div>
     );
   }
-};
+}

@@ -5,27 +5,27 @@
 
 const LS_KEY = 'rttw-userinfo';
 const defaultUserInfo = {
-    completed: []
+  completed: []
 };
 
 // Returns a fresh copy of the userInfo stored in localStorage
 export function getUserInfo() {
-    return JSON.parse(localStorage.getItem(LS_KEY) || JSON.stringify(defaultUserInfo));
+  return JSON.parse(localStorage.getItem(LS_KEY) || JSON.stringify(defaultUserInfo));
 }
 
 // Sets the given userInfo object to localStorage
 export function setUserInfo(userInfo) {
-    // Keep completed list sorted by index
-    userInfo.completed.sort((a, b) => a.index - b.index);
-    return localStorage.setItem(LS_KEY, JSON.stringify(userInfo));
+  // Keep completed list sorted by index
+  userInfo.completed.sort((a, b) => a.index - b.index);
+  return localStorage.setItem(LS_KEY, JSON.stringify(userInfo));
 }
 
 // Clears userInfo from localStorage
 export function clearUserInfo() {
-    return localStorage.removeItem(LS_KEY);
+  return localStorage.removeItem(LS_KEY);
 }
 
 // Returns the user's solution for a given puzzle index, if any
 export function getUserSolution(index, info = getUserInfo()) {
-    return info.completed.find(x => x.index === index);
-};
+  return info.completed.find((x) => x.index === index);
+}

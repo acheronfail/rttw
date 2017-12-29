@@ -17,7 +17,8 @@
   animation: bounceIn 750ms ease-in;
 }
 
-.app main, .app nav {
+.app main,
+.app nav {
   padding: 10px;
 }
 
@@ -28,7 +29,9 @@
 }
 
 /* atlaskit hack */
-.app nav .list > div > label { display: none; }
+.app nav .list > div > label {
+  display: none;
+}
 
 .container {
   position: relative;
@@ -92,8 +95,13 @@
 }
 
 @keyframes bounceIn {
-  from, 20%, 40%, 60%, 80%, to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   0% {
@@ -101,7 +109,7 @@
   }
 
   10% {
-    transform: scale3d(.3, .3, .3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
 
   20% {
@@ -109,7 +117,7 @@
   }
 
   40% {
-    transform: scale3d(.9, .9, .9);
+    transform: scale3d(0.9, 0.9, 0.9);
   }
 
   60% {
@@ -118,7 +126,7 @@
   }
 
   80% {
-    transform: scale3d(.97, .97, .97);
+    transform: scale3d(0.97, 0.97, 0.97);
   }
 
   to {
@@ -157,11 +165,21 @@
   left: 0;
   width: 600px;
   height: var(--rainbow-button-height);
-  background: #CCC;
-  background: linear-gradient(to right, var(--rainbow-color-1) 0%, var(--rainbow-color-2) 14%, var(--rainbow-color-3) 28%, var(--rainbow-color-4) 42%, var(--rainbow-color-5) 56%, var(--rainbow-color-6) 70%, var(--rainbow-color-7) 84%, var(--rainbow-color-1) 100%);
+  background: #ccc;
+  background: linear-gradient(
+    to right,
+    var(--rainbow-color-1) 0%,
+    var(--rainbow-color-2) 14%,
+    var(--rainbow-color-3) 28%,
+    var(--rainbow-color-4) 42%,
+    var(--rainbow-color-5) 56%,
+    var(--rainbow-color-6) 70%,
+    var(--rainbow-color-7) 84%,
+    var(--rainbow-color-1) 100%
+  );
   background-position: -200px 0;
   transition: all 0.5s;
-  content: "";
+  content: '';
 }
 
 .rainbow-wrapper * {
