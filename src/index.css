@@ -2,4 +2,18 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  color: #888;
+  text-align: center;
 }
