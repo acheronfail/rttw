@@ -1,3 +1,6 @@
+// TODO: rather than sort/access by puzzle index, we access puzzles by their unique name instead
+// --> maybe just make this an object with names as keys then?
+
 export const puzzles = [
     {
         name: 'id',
@@ -62,10 +65,6 @@ export const puzzles = [
     {
         name: 'evil2',
         source: `var eval = window.eval;\nfunction evil2(x) {\n    return eval('('+x+')(x)') && !eval(x)(x);\n}`
-    },
-    {
-        name: 'evil3',
-        source: `var eval = window.eval;\nfunction evil3(parameter) {\n    return eval('('+parameter+')(parameter)') && \n          !eval(parameter)(parameter);\n}`
     },
     {
         name: 'random1',

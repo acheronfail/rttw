@@ -1,6 +1,7 @@
 import React from 'react';
 import Lozenge from '@atlaskit/lozenge';
 
+// Returns a function which when called creates a RadioItem component
 export const itemCreator = (name) => (value, label, done, extra = {}) => ({
     name,
     value,
@@ -19,11 +20,13 @@ export const itemCreator = (name) => (value, label, done, extra = {}) => ({
 // General helpers
 export const cycleArray = (arr, i) => (i % arr.length + arr.length) % arr.length;
 
+// Resets the CSS animation of elements with the given class
 export const resetCSSAnimation = (cls) => {
-    const element = document.querySelector(`.${cls}`);
-    element.classList.remove(cls);
-    void element.offsetWidth;
-    element.classList.add(cls);
+    [...document.querySelectorAll(`.${cls}`)].forEach((element) => {
+        element.classList.remove(cls);
+        void element.offsetWidth;
+        element.classList.add(cls);
+    });
 };
 
 // CodeMirror helpers

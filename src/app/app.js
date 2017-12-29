@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import { AkFieldRadioGroup as RadioGroup } from '@atlaskit/field-radio-group';
+import { cycleArray, firstPos, lastPos, itemCreator, resetCSSAnimation } from '../util';
+import { puzzles } from '../puzzles';
+import { getUserInfo, setUserInfo, clearUserInfo, getUserSolution } from '../user';
+import debounce from 'debounce';
 import ToolTip from '@atlaskit/tooltip';
 import Modal from '@atlaskit/modal-dialog';
-import debounce from 'debounce';
-
-import '@atlaskit/css-reset';
-import './app.css';
-
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
+import '@atlaskit/css-reset';
+import './app.css';
 
-import { cycleArray, firstPos, lastPos, itemCreator, resetCSSAnimation } from '../util';
-import { puzzles } from '../puzzles';
-
-import { getUserInfo, setUserInfo, clearUserInfo, getUserSolution } from '../user';
-
+// Time to wait before eval'ing the user's code
 const EVAL_WAIT_TIME = 300;
+const BLANK_MESSAGE = 'enter some arguments';
 
-class App extends Component {
+export default class App extends Component {
   state = {
     modalOpen: false,
-    result: 'start typing to eval',
+    result: BLANK_MESSAGE,
     index: 0,
     error: false
   };
@@ -32,7 +30,7 @@ class App extends Component {
       clearUserInfo();
       this.openPuzzle(0);
 
-      // Restart logo CSS animation
+      // Restart CSS animations
       resetCSSAnimation('app-logo');
       resetCSSAnimation('app');
     }
@@ -42,7 +40,7 @@ class App extends Component {
   resetState(extra = {}) {
     this.setState({
       modalOpen: false,
-      result: '',
+      result: BLANK_MESSAGE,
       error: false,
       ...extra
     });
@@ -65,14 +63,19 @@ class App extends Component {
     this.cm.on('changes', debounce(() => {
       const solution = this.getSolution();
       if (solution && solution.length > 0) {
+        // Run code in a "semi"-sandboxed env via iframe - the user can still hang the app with 
+        // infinite loops and such, but this means breaking the current page is a little less likely
         const iframe = document.createElement('iframe');
         document.body.appendChild(iframe);
+        
+        // Remove reference to parent element
         delete iframe.contentWindow.frameElement;
 
         try {
           const result = JSON.stringify(iframe.contentWindow.eval(this.cm.getValue()));
           const passed = result === 'true';
 
+          // TODO: better storage management, preferably via a server?
           // At the moment just update the user data if the solution is shorter
           const userInfo = getUserInfo();
           const last = getUserSolution(this.state.index, userInfo);
@@ -84,6 +87,7 @@ class App extends Component {
             setUserInfo(userInfo);
           }
 
+          // Only show the modal if the current solution is better than the last one
           this.setState({
             result,
             error: false,
@@ -103,6 +107,7 @@ class App extends Component {
     }, EVAL_WAIT_TIME));
 
     // Start at first unsolved puzzle
+    // We keep the `userInfo.completed` array sorted so we can do this simple check
     const completedIds = getUserInfo().completed.map(x => x.index);
     let firstUnsolved = completedIds.findIndex((x, i) => x !== i);
     if (firstUnsolved === -1) firstUnsolved = completedIds.length;
@@ -113,7 +118,7 @@ class App extends Component {
   getNavItems() {
     const userInfo = getUserInfo();
     const completedIds = userInfo.completed.map(x => x.index);
-    const makeItem = itemCreator('color');
+    const makeItem = itemCreator('puzzle');
     return puzzles.map(({ name }, i) => {
       const existing = getUserSolution(i, userInfo);
       return makeItem(`${i}`, name, completedIds.includes(i), {
@@ -182,12 +187,59 @@ class App extends Component {
     }
   }
 
-  render() {
-    const { error, result, modalOpen } = this.state;
+  renderHeader() {
+    return (
+      <header className="app-header">
+        <div className="app-logo">
+          <code>true</code>
+        </div>
+        <ToolTip content="Click this to reset everything!" position="right">
+          <div className="rainbow-wrapper">
+            <button onClick={() => this.resetApp()} className="app-title">Return true to win!</button>
+          </div>
+        </ToolTip>
+      </header>
+    );
+  }
+
+  renderModal(length) {
     const modalActions = [
       { text: 'Stay', onClick: () => this.setState({ modalOpen: false }) },
       { text: 'Next Puzzle', onClick: () => this.cycle(1) }
     ];
+
+    return (
+      <Modal
+        autoFocus={true}
+        actions={modalActions}
+        onClose={() => { }}
+        heading="Congratulations! 🎉"
+      >
+        You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
+        <br />
+        That's your shortest solution yet: <strong>{length} bytes</strong> 👌
+        <br /><br />
+        You can move on to the next puzzle, or try to find an even shorter answer for this one.
+      </Modal>
+    );
+  }
+
+  renderNav() {
+    return (
+      <nav>
+        <h3>Puzzles</h3>
+        <div className="list">
+          <RadioGroup
+            onRadioChange={({ target: { value } }) => this.openPuzzle(value | 0)}
+            items={this.getNavItems()}
+          />
+        </div>
+      </nav>
+    );
+  }
+
+  render() {
+    const { error, result, modalOpen } = this.state;
 
     let length = 0;
     {
@@ -197,16 +249,7 @@ class App extends Component {
 
     return (
       <div className="app">
-        <header className="app-header">
-          <div className="app-logo">
-            <code>true</code>
-          </div>
-          <ToolTip content="Click this to reset everything!" position="right">
-            <div className="rainbow-wrapper">
-              <button onClick={() => this.resetApp()} className="app-title">Return true to win!</button>
-            </div>
-          </ToolTip>
-        </header>
+        {this.renderHeader()}
         <div className="container">
           <main>
             <div ref={c => this.editorEl = c}></div>
@@ -215,34 +258,11 @@ class App extends Component {
               <br />
               Bytecount: {length}
             </pre>
-            {modalOpen && (
-              <Modal 
-                actions={modalActions}
-                onClose={() => {}}
-                heading="Congratulations! 🎉"
-                autoFocus={true}
-              >
-                  You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
-                  <br />
-                  That's your shortest solution yet: <strong>{length} bytes</strong> 👌
-                  <br /><br />
-                  You can move on to the next puzzle, or try to find an even shorter answer for this one.
-              </Modal>
-            )}
+            {modalOpen && this.renderModal(length)}
           </main>
-          <nav>
-            <h3>Puzzles</h3>
-            <div className="list">
-              <RadioGroup
-                onRadioChange={({ target: { value }}) => this.openPuzzle(value | 0)}
-                items={this.getNavItems()}
-              />
-            </div>
-          </nav>
+          {this.renderNav()}
         </div>
       </div>
     );
   }
-}
-
-export default App;
+};
