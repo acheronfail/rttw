@@ -72,7 +72,10 @@ export default class App extends Component {
         delete iframe.contentWindow.frameElement;
 
         try {
-          const result = JSON.stringify(iframe.contentWindow.eval(this.cm.getValue()));
+          const { name: fn } = puzzles[this.state.index];
+          const [puzzle, call] = this.cm.getValue().split(new RegExp(`(?=\\n${fn}\\()`));
+          const code = `(function () {\n${puzzle}\nwindow['${fn}'] = ${fn};\n})();\n${call}`;
+          const result = JSON.stringify(iframe.contentWindow.eval(code));
           const passed = result === 'true';
 
           // TODO: better storage management, preferably via a server?
