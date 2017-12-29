@@ -55,6 +55,7 @@ class App extends Component {
     this.cm = new CodeMirror(this.editorEl, {
       showCursorWhenSelecting: true,
       indentWithTabs: true,
+      lineWrapping: true,
       lineNumbers: true,
       indentUnit: 4,
       tabSize: 4
@@ -71,8 +72,6 @@ class App extends Component {
         try {
           const result = JSON.stringify(iframe.contentWindow.eval(this.cm.getValue()));
           const passed = result === 'true';
-
-          // TODO: make a much better way of handling storage and user info!!!
 
           // At the moment just update the user data if the solution is shorter
           const userInfo = getUserInfo();
