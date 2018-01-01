@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { AkFieldRadioGroup as RadioGroup } from '@atlaskit/field-radio-group';
-import { cycleArray, firstPos, lastPos, itemCreator, resetCSSAnimation } from '../util';
+import { cycleArray, firstPos, lastPos, resetCSSAnimation } from '../util';
 import { puzzles } from '../puzzles';
 import { getUserInfo, setUserInfo, clearUserInfo, getUserSolution } from '../user';
 import debounce from 'debounce';
 import ToolTip from '@atlaskit/tooltip';
+import Lozenge from '@atlaskit/lozenge';
 import Modal from '@atlaskit/modal-dialog';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
@@ -77,6 +78,9 @@ export default class App extends Component {
         delete iframe.contentWindow.frameElement;
 
         try {
+          // Scope puzzle setup and then inject the user's solution
+          // TODO: rather than injecting everything, build the code to run from the puzzle data and
+          // the user's solution separately
           const { name: fn } = puzzles[this.state.index];
           const [puzzle, call] = this.cm.getValue().split(new RegExp(`(?=\\n${fn}\\()`));
           const code = `(function () {\n${puzzle}\nwindow['${fn}'] = ${fn};\n})();\n${call}`;
@@ -127,21 +131,35 @@ export default class App extends Component {
   }
 
   // Generates the items for the side nav
+  // TODO: when names are too long, make nav horizontally scrollable
   getNavItems() {
     const userInfo = getUserInfo();
     const completedIds = userInfo.completed.map((x) => x.index);
-    const makeItem = itemCreator('puzzle');
-    return puzzles.map(({ name }, i) => {
+
+    return puzzles.map(({ name: puzzleName }, i) => {
       const existing = getUserSolution(i, userInfo);
-      return makeItem(`${i}`, name, completedIds.includes(i), {
-        statusText: existing && existing.solution.length + ' bytes',
+      const completed = completedIds.includes(i);
+      const statusText = existing && existing.solution.length + ' bytes';
+
+      return {
+        name: 'nav-item',
+        value: `${i}`,
+        label: (
+          <span>
+            <Lozenge appearance={completed ? 'success' : 'default'}>
+              {completed ? statusText || 'solved' : 'unsolved'}
+            </Lozenge>
+            &nbsp;
+            {puzzleName}
+          </span>
+        ),
         isSelected: i === this.state.index,
         isDisabled: i > userInfo.completed.length + 2
-      });
+      };
     });
   }
 
-  // Retrieves the user's solution
+  // Retrieves the user's solution from the editor
   getSolution() {
     if (this.editableRegion) {
       const { from, to } = this.editableRegion.find();
