@@ -92,7 +92,7 @@ export const puzzles = [
   },
   {
     name: 'native',
-    source: `const toString = Function.prototype.toString;\nfunction native(x) {\n    return (x() === 1) && (x.toString() === 'function () { [native code] }') && (toString.call(x) === x.toString())\n}`
+    source: `const toString = Function.prototype.toString;\nfunction native(x) {\n    return (x() === 1) && (x.toString().match(/function \\w* *\\(\\) {[ \\n]+\\[native code\\][ \\n]+}/)) && (toString.call(x) === x.toString())\n}`
   },
   {
     name: 'stringable',
