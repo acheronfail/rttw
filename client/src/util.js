@@ -17,3 +17,13 @@ export const lastPos = (cm) => {
   let ch = cm.getLine(line).length;
   return { line, ch };
 };
+
+export const noop = () => {};
+
+// Perform a simple GET request
+export const performGetRequest = (url) => {
+  return fetch(url).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error(response.statusText);
+  });
+};

@@ -1,8 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app/app';
-import registerServiceWorker from './registerServiceWorker';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { createStore, applyMiddleware } from 'redux';
+import { rootReducer, rootEpic } from './state/';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import registerServiceWorker from './registerServiceWorker';
+import App from './app/app';
+
+const epicMiddleware = createEpicMiddleware(rootEpic);
+
+let middleware;
+if (process.env.NODE_ENV === 'development') {
+  const { composeWithDevTools } = require('redux-devtools-extension');
+  middleware = composeWithDevTools(applyMiddleware(epicMiddleware));
+} else {
+  middleware = applyMiddleware(epicMiddleware);
+}
+
+const store = createStore(rootReducer, middleware);
+const urlParams = new URLSearchParams(window.location.search);
+
+render(
+  <Provider store={store}>
+    <App urlParams={urlParams} />
+  </Provider>,
+  document.getElementById('root')
+);
 
 registerServiceWorker();
