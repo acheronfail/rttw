@@ -16,6 +16,8 @@ import './app.css';
 const EVAL_WAIT_TIME = 300;
 const BLANK_MESSAGE = 'enter some arguments';
 
+// TODO: use SERVER API!!!
+
 export default class App extends Component {
   state = {
     modalOpen: false,
@@ -68,7 +70,10 @@ export default class App extends Component {
         const iframe = document.createElement('iframe');
         document.body.appendChild(iframe);
 
-        // Remove reference to parent element
+        // Place iframe within a sandbox
+        // TODO: not sure if this actually works
+        // FIXME: user can still access top via `window.top`, which cannot be deleted
+        iframe.sandbox = '';
         delete iframe.contentWindow.frameElement;
 
         try {
