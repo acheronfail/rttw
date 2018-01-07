@@ -27,7 +27,7 @@
         "start": "concurrently \"yarn server\" \"yarn client start\"",
         "server": "yarn build && node build/index.js",
         "client": "node scripts/run-in-client.js",
-        "build": "babel server -d build --copy-files"
+        "build": "babel server -d build --copy-files --ignore spec.js,test.js"
     },
     "lint-staged": {
         "{server,client/src}/**/*.{js,jsx,json,css}": [
