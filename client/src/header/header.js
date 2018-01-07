@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
-import { resetUserDataAction } from '../state/actions/entities';
 import ToolTip from '@atlaskit/tooltip';
 
 const Wrapper = styled.header`
@@ -18,7 +16,7 @@ const Wrapper = styled.header`
 const appLogoSpin = keyframes`
   from {
     transform-origin: center;
-    transform: rotate3d(0, 0, 1, -200deg);
+    transform: scale(0.2) rotate3d(0, 0, 1, -200deg);
     opacity: 0;
     filter: hue-rotate(0deg);
   }
@@ -48,15 +46,14 @@ const TitleButton = styled.button`
 
 export class Header extends PureComponent {
   render() {
-    const { onClick } = this.props;
     return (
       <Wrapper>
         <Logo>
-          <code>true</code>
+          <code>return true</code>
         </Logo>
-        <ToolTip content="Click this to reset everything!" position="right">
+        <ToolTip content="Give the correct input so the function returns true!" position="bottom">
           <div className="rainbow-wrapper">
-            <TitleButton onClick={() => onClick()}>Return true to win!</TitleButton>
+            <TitleButton>Return true to win!</TitleButton>
           </div>
         </ToolTip>
       </Wrapper>
@@ -64,10 +61,4 @@ export class Header extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = (dispatch) => ({
-  onClick: () => dispatch(resetUserDataAction())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

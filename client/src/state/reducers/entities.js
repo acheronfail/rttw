@@ -1,7 +1,6 @@
 import {
   FETCH_PUZZLES_SUCCESS,
   FETCH_PUZZLES_FAILURE,
-  RESET_USER_DATA,
   PUZZLE_COMPLETED
 } from '../actions/entities';
 
@@ -23,10 +22,6 @@ export const entitiesReducer = (entitiesState = initialEntitiesState, action) =>
     case FETCH_PUZZLES_SUCCESS: {
       const { puzzles, user } = action.payload;
       return Object.assign({}, entitiesState, { puzzles, user });
-    }
-    case RESET_USER_DATA: {
-      // TODO: implement reset user data
-      return entitiesState;
     }
     case PUZZLE_COMPLETED: {
       const { user } = action.payload;

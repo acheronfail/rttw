@@ -16,9 +16,6 @@ export const fetchPuzzlesFailureAction = (error) => ({
   error
 });
 
-export const RESET_USER_DATA = 'RESET_USER_DATA';
-export const resetUserDataAction = () => ({ type: RESET_USER_DATA });
-
 export const SUBMIT_USER_CODE = 'SUBMIT_USER_CODE';
 export const submitUserCodeAction = (id, name, solution) => ({
   type: SUBMIT_USER_CODE,
