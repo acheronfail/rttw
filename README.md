@@ -19,7 +19,7 @@ MongoDB may be installed locally or on a server. Wherever you choose to install 
 the server's address is updated in the file `server/config.json` so the client and server both know
 where to look for the MongoDB database.
 
-Once you've setup MongoDB, you'll want to fill it with the puzzles - simply run `node scripts/add-puzzles.js`
+Once you've setup MongoDB, you'll want to fill it with the puzzles - simply run `node scripts/prepare-db.js`
 which will automatically add the puzzles in the repository to your MongoDB instance.
 
 #### Starting the project
