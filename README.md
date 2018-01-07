@@ -9,11 +9,15 @@ _NOTE: Since this project is very new it may be down from time to time until I g
 
 ## Using this project
 
+#### Requirements
+
 This project requires the following to be installed:
 
 - [NodeJS](https://nodejs.org/en/)
 - [`yarn`](https://yarnpkg.com/en/) (install with `npm i -g yarn` once you have node)
 - [MongoDB](https://docs.mongodb.com/manual/installation/)
+
+#### Setting up the database
 
 MongoDB may be installed locally or on a server. Wherever you choose to install it, make sure that
 the server's address is updated in the file `server/config.json` so the client and server both know
@@ -22,11 +26,13 @@ where to look for the MongoDB database.
 Once you've setup MongoDB, you'll want to fill it with the puzzles - simply run `node scripts/add-puzzles.js`
 which will automatically add the puzzles in the repository to your MongoDB instance.
 
-To start the project, make sure the MongoDB is running, then simply run `yarn start`, which will run 
-both the server and client.
+#### Starting the project
 
-> This project currently runs in development mode, and hasn't yet been configured to run in any sort
-of production environment.
+To start the project, make sure the MongoDB is running, then simply run `yarn start`, which will run 
+both the server and client (in development mode - nice for seeing the whole app/server locally).
+
+> This project is currently designed so that the client is deployed to GitHub Pages. If you'd like to
+host a client/server on your own then it's up to you.
 
 ### Project Design
 
