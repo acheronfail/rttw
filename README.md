@@ -43,7 +43,7 @@ the user needs to do to log in is append their id to the url and the client will
 requests for their solutions and data.
 
 The `puzzles` db document structure is represented as:
-```json
+```js
 {
     "_id": "<ObjectId>",
     // Name of the puzzle function (must be a valid JS identifier)
@@ -56,7 +56,7 @@ The `puzzles` db document structure is represented as:
 ```
 
 The `users` db document structure is represented as:
-```json
+```js
 {
     // This is both the user's id and the db's id
     "_id": "<ObjectId>",
