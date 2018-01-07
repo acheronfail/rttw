@@ -8,7 +8,11 @@ const Wrapper = styled.pre`
   height: 40px;
   padding: 10px;
 
-  ${(props) => props.resultSuccessful && 'color: #080'};
+  /* Change colour of results text if there's an error or if code returned true */
+  ${({ error, resultSuccessful }) => {
+    if (error) return 'color: #a00;';
+    if (resultSuccessful) return 'color: #080;';
+  }};
 `;
 
 const CharCount = styled.span`
@@ -17,10 +21,12 @@ const CharCount = styled.span`
 
 export class Results extends PureComponent {
   render() {
-    const { results, solution, resultSuccessful } = this.props;
+    const { results, solution, resultSuccessful, error } = this.props;
+    const icon = resultSuccessful && !error ? '✔' : '✖';
+    const text = error ? error.message : `Result: ${results || undefined}`;
     return (
-      <Wrapper resultSuccessful={resultSuccessful}>
-        {resultSuccessful ? '✔' : '✖'} Result: {results}
+      <Wrapper error={error} resultSuccessful={resultSuccessful}>
+        {icon} {text}
         <br />
         <CharCount>
           {'//'} {solution.length} {solution.length === 1 ? 'char' : 'chars'}
@@ -33,9 +39,10 @@ export class Results extends PureComponent {
 const mapStateToProps = (state) => ({
   solution: state.ui.solution,
   results: state.ui.results,
-  resultSuccessful: state.ui.resultSuccessful
+  resultSuccessful: state.ui.resultSuccessful,
   // TODO: not currently verifying solutions on the server
-  // resultVerified: state.ui.resultVerified
+  // resultVerified: state.ui.resultVerified,
+  error: state.ui.wasError && state.ui.error
 });
 
 const mapDispatchToProps = (dispatch) => ({});

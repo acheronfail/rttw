@@ -1,5 +1,9 @@
 import { SELECT_PUZZLE, CYCLE_PUZZLE, TOGGLE_MODAL, UPDATE_RESULTS } from '../actions/ui';
-import { SUBMIT_USER_CODE, PUZZLE_COMPLETED } from '../actions/entities';
+import {
+  PUZZLE_COMPLETED,
+  FETCH_PUZZLES_SUCCESS,
+  FETCH_PUZZLES_FAILURE
+} from '../actions/entities';
 import { cycleArray } from '../../util';
 
 const initialUIState = {
@@ -16,7 +20,11 @@ const initialUIState = {
   // The index of the currently selected puzzle
   selectedPuzzle: 0,
   // The user's current solution
-  currentSolution: ''
+  currentSolution: '',
+  // In case of any server/connection errors we have a flag here
+  wasError: false,
+  // The latest error lives here
+  error: null
 };
 
 export const uiReducer = (uiState = initialUIState, action) => {
@@ -37,11 +45,20 @@ export const uiReducer = (uiState = initialUIState, action) => {
     case UPDATE_RESULTS: {
       const { origin, solution, results, resultSuccessful } = action.payload;
       const resultVerified = origin === 'server';
-      return Object.assign({}, uiState, { results, solution, resultSuccessful, resultVerified });
+      return Object.assign({}, uiState, {
+        results,
+        solution,
+        resultSuccessful,
+        resultVerified,
+        wasError: false
+      });
     }
-    case SUBMIT_USER_CODE: {
-      // TODO: loading indicator ?
-      return uiState;
+    case FETCH_PUZZLES_SUCCESS: {
+      return Object.assign({}, uiState, { error: null, wasError: false });
+    }
+    case FETCH_PUZZLES_FAILURE: {
+      const { error } = action;
+      return Object.assign({}, uiState, { error, wasError: true });
     }
     case PUZZLE_COMPLETED: {
       // Update URL with user id
