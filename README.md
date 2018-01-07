@@ -20,7 +20,8 @@ the server's address is updated in the file `server/config.json` so the client a
 where to look for the MongoDB database.
 
 Once you've setup MongoDB, you'll want to fill it with the puzzles - simply run `node scripts/prepare-db.js`
-which will automatically add the puzzles in the repository to your MongoDB instance.
+which will automatically add the puzzles in the repository to your MongoDB instance (note that this 
+will remove any pre-existing documents in the `puzzles` collection).
 
 #### Starting the project
 
