@@ -3,8 +3,11 @@
  * https://alf.nu/ReturnTrue
  */
 
-
-// submitted by James
+module.exports = [
+    {
+        name: 'countOnMe',
+        source:
+`// submitted by James
 function countOnMe(x) {
     if (!(x instanceof Array))
         throw 'x must be an array.';
@@ -16,4 +19,6 @@ function countOnMe(x) {
     }
 
     return true;
-}
+}`
+    },
+];

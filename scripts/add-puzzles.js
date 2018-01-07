@@ -5,16 +5,20 @@ const { MongoClient } = require('mongodb');
 
 const config = require('../server/config.json');
 
+// Get puzzles and add an `index` property so MongoDB can order them
+const parsePuzzle = (puzzle, i) => {
+    puzzle.index = i;
+    return puzzle;
+};
+
 MongoClient.connect(config.MONGO_URL, async (err, mongoClient) => {
     const db = mongoClient.db(config.DB_NAME);
     const puzzlesCollection = db.collection('puzzles');
 
-    // Get puzzles and add an `index` property
+    
     console.log('Preparing puzzles...');
-    const puzzles = require('../puzzles/season1').map((puzzle, i) => {
-        puzzle.index = i;
-        return puzzle;
-    });
+    const seasonOnePuzzles = require('../puzzles/season1').map(parsePuzzle);
+    const seasonTwoPuzzles = require('../puzzles/season2').map(parsePuzzle);
 
     try {
         // Remove all current puzzles
@@ -22,7 +26,8 @@ MongoClient.connect(config.MONGO_URL, async (err, mongoClient) => {
         await puzzlesCollection.remove({}, {});
         // Add in new puzzles
         console.log('Adding puzzles...');
-        await puzzlesCollection.insertMany(puzzles);
+        await puzzlesCollection.insertMany(seasonOnePuzzles);
+        await puzzlesCollection.insertMany(seasonTwoPuzzles);
     } catch (err) {
         console.error('An error occurred :/');
         console.error(err);
