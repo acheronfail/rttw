@@ -17,6 +17,7 @@
         "babel-plugin-transform-class-properties": "^6.24.1",
         "babel-preset-env": "^1.6.1",
         "concurrently": "^3.5.1",
+        "cross-env": "^5.1.3",
         "husky": "^0.14.3",
         "lint-staged": "^6.0.0",
         "prettier": "^1.9.2",
@@ -24,10 +25,11 @@
     },
     "scripts": {
         "precommit": "lint-staged",
-        "start": "concurrently \"yarn server\" \"yarn client start\"",
+        "start": "concurrently --kill-others \"yarn server\" \"yarn client start\"",
         "server": "yarn build && node build/index.js",
         "client": "node scripts/run-in-client.js",
-        "build": "babel server -d build --copy-files --ignore spec.js,test.js"
+        "build": "babel server -d build --copy-files --ignore spec.js,test.js",
+        "postinstall": "yarn client"
     },
     "lint-staged": {
         "{server,client/src}/**/*.{js,jsx,json,css}": [

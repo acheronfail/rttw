@@ -30,6 +30,17 @@ both the server and client (in development mode - nice for seeing the whole app/
 > This project is currently designed so that the client is deployed to GitHub Pages. If you'd like to
 host a client/server on your own then it's up to you.
 
+#### Working with the `/client` sub-package
+
+The repo is setup so that if you run `yarn client {command}` then the `{command}` will be sent through
+to the `client` sub-package. This makes it so you never have to change directories when working between
+the client and server. That basically means that:
+
+- `yarn client` == `cd client && yarn`
+- `yarn client start` == `cd client && yarn start`
+- `yarn client build` == `cd client && yarn build`
+- etc, etc, you get the idea.
+
 ## Project Design
 
 This repository contains both the server and the client.
@@ -92,4 +103,5 @@ we can rapidly query for user data and check for unique usernames.
 
 - Credits go to the original author of [return true to win](https://alf.nu/ReturnTrue).
 - This was made in a snap with [`create-react-app`](https://github.com/facebookincubator/create-react-app)
+- Some UI components were thrown together with [AtlasKit](https://atlaskit.atlassian.com/)
 - It wouldn't have been possible with the excellent [CodeMirror editor](https://codemirror.net)
