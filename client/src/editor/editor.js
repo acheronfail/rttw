@@ -34,7 +34,7 @@ export class Editor extends Component {
       const { userId, puzzle, userAnswer, updateResults, submitUserCode } = this.props;
       const solution = this.getSolution();
 
-      if (!puzzle || !solution) return updateResults('local', '', false);
+      if (!puzzle || !solution) return updateResults('local', '', '', false);
 
       // Run code in a "semi"-sandboxed env via iframe - the user can still hang the app with
       // infinite loops and such, but this means breaking the current page is a little less likely
@@ -60,20 +60,25 @@ export class Editor extends Component {
         const shouldUpdateSolution = passed && (!userAnswer || solution.length < userAnswer.length);
 
         // Display the local result
-        updateResults('local', localResult, passed);
+        updateResults('local', solution, localResult, passed);
 
         // Here we submit their code to the server for verification
         if (shouldUpdateSolution) {
           submitUserCode(userId, puzzle.name, solution);
         }
       } catch (err) {
-        updateResults('local', err.message, false);
+        updateResults('local', solution, err.message, false);
       }
 
       // Remove the iframe from the DOM since we don't need it anymore
       iframe.remove();
     }, EVAL_WAIT_TIME);
     this.cm.on('changes', onChanges);
+  }
+
+  // Ensure that our editor is updated each time the component re-renders
+  componentDidUpdate() {
+    this.renderPuzzleIntoEditor();
   }
 
   // Retrieves the user's solution from the editor
@@ -128,9 +133,6 @@ export class Editor extends Component {
   }
 
   render() {
-    // FIXME: should this be here ?
-    // ... not really sure on best practices when using libraries like CodeMirror with React ...
-    this.renderPuzzleIntoEditor();
     return <Wrapper innerRef={(c) => (this.editorEl = c)} />;
   }
 }
@@ -145,8 +147,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateResults: (origin, text, passed) => dispatch(updateResultsAction(origin, text, passed)),
-  submitUserCode: (id, puzzleName, code) => dispatch(submitUserCodeAction(id, puzzleName, code))
+  updateResults: (...args) => dispatch(updateResultsAction(...args)),
+  submitUserCode: (...args) => dispatch(submitUserCodeAction(...args))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

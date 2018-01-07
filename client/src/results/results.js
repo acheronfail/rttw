@@ -11,31 +11,31 @@ const Wrapper = styled.pre`
   ${(props) => props.resultSuccessful && 'color: #080'};
 `;
 
-export class Results extends PureComponent {
-  getIcon() {
-    const { resultVerified } = this.props;
-    return resultVerified ? '✔' : '✖';
-  }
+const CharCount = styled.span`
+  color: #a5a5a5;
+`;
 
+export class Results extends PureComponent {
   render() {
-    const { results, resultSuccessful } = this.props;
+    const { results, solution, resultSuccessful } = this.props;
     return (
       <Wrapper resultSuccessful={resultSuccessful}>
-        {this.getIcon()} Result: {results}
+        {resultSuccessful ? '✔' : '✖'} Result: {results}
         <br />
-        {/* TODO: good way of verifying solution length */}
-        {/*       ^^ maybe just return the verified solution in the request ? */}
-        {/* TODO: show a verified indicator? should it change - yes it should */}
-        {/* Bytecount: {currentSolution.length} */}
+        <CharCount>
+          {'//'} {solution.length} {solution.length === 1 ? 'char' : 'chars'}
+        </CharCount>
       </Wrapper>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  solution: state.ui.solution,
   results: state.ui.results,
-  resultSuccessful: state.ui.resultSuccessful,
-  resultVerified: state.ui.resultVerified
+  resultSuccessful: state.ui.resultSuccessful
+  // TODO: not currently verifying solutions on the server
+  // resultVerified: state.ui.resultVerified
 });
 
 const mapDispatchToProps = (dispatch) => ({});

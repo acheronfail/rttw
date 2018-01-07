@@ -17,7 +17,7 @@ export const toggleModalAction = (flag) => ({
 });
 
 export const UPDATE_RESULTS = 'UPDATE_RESULTS';
-export const updateResultsAction = (origin, results, resultSuccessful) => ({
+export const updateResultsAction = (origin, solution, results, resultSuccessful) => ({
   type: UPDATE_RESULTS,
-  payload: { origin, results, resultSuccessful }
+  payload: { origin, solution, results, resultSuccessful }
 });

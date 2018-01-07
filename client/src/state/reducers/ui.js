@@ -3,6 +3,8 @@ import { SUBMIT_USER_CODE, PUZZLE_COMPLETED } from '../actions/entities';
 import { cycleArray } from '../../util';
 
 const initialUIState = {
+  // The user's current solution: used for bytecount
+  solution: '',
   // Text to be displayed in the "results" box
   results: '',
   // Whether or not the current result was successful
@@ -33,9 +35,9 @@ export const uiReducer = (uiState = initialUIState, action) => {
       return Object.assign({}, uiState, { modalOpen: action.payload.flag });
     }
     case UPDATE_RESULTS: {
-      const { origin, results, resultSuccessful } = action.payload;
+      const { origin, solution, results, resultSuccessful } = action.payload;
       const resultVerified = origin === 'server';
-      return Object.assign({}, uiState, { results, resultSuccessful, resultVerified });
+      return Object.assign({}, uiState, { results, solution, resultSuccessful, resultVerified });
     }
     case SUBMIT_USER_CODE: {
       // TODO: loading indicator ?

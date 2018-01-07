@@ -25,7 +25,7 @@ export const entitiesReducer = (entitiesState = initialEntitiesState, action) =>
       return Object.assign({}, entitiesState, { puzzles, user });
     }
     case RESET_USER_DATA: {
-      // TODO:
+      // TODO: implement reset user data
       return entitiesState;
     }
     case PUZZLE_COMPLETED: {

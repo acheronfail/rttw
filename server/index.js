@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 
 import ServerError, { isServerError } from './errors';
-import config from 'config.json';
+import config from './config.json';
 
 const app = express();
 app.use(bodyParser.json());
