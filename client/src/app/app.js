@@ -1,15 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { noop } from '../util';
+import { noop, bounceIn } from '../util';
 import Modal from '@atlaskit/modal-dialog';
+import styled from 'styled-components';
 import '@atlaskit/css-reset';
 import './app.css';
 
-import { fetchUserAction, fetchPuzzlesAction } from '../state/actions/entities';
+import { fetchPuzzlesAction } from '../state/actions/entities';
 import { cyclePuzzleAction, toggleModalAction } from '../state/actions/ui';
+import Results from '../results/results';
 import Header from '../header/header';
 import Editor from '../editor/editor';
 import Nav from '../nav/nav';
+
+const Wrapper = styled.div`
+  min-width: 768px;
+  max-width: 1024px;
+  box-shadow: 0 5px 15px #222;
+  border-radius: 5px;
+  animation: ${bounceIn} 750ms ease-in;
+`;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const Main = styled.main`
+  padding: 10px;
+  order: 1;
+  flex: 3;
+`;
 
 export class App extends Component {
   componentDidMount() {
@@ -22,10 +43,10 @@ export class App extends Component {
 
   // Show the congratulations dialog
   renderModal(length) {
-    const { cyclePuzzle, closeModal } = this.props;
+    const { cyclePuzzle, puzzlesCount, closeModal } = this.props;
     const modalActions = [
       { text: 'Stay', onClick: () => closeModal() },
-      { text: 'Next Puzzle', onClick: () => cyclePuzzle(1) }
+      { text: 'Next Puzzle', onClick: () => cyclePuzzle(puzzlesCount, 1) }
     ];
 
     return (
@@ -41,42 +62,34 @@ export class App extends Component {
   }
 
   render() {
-    const { currentSolution, modalOpen } = this.props;
+    const { modalOpen } = this.props;
     return (
-      <div className="app">
+      <Wrapper>
         <Header />
-        <div className="container">
-          <main>
+        <Container>
+          <Main>
             <Editor />
-            {/* TODO: add in result to state */}
-            <pre id="result" style={{ color: true ? '#a00' : 'inherit' }}>
-              Result: {`TODO: result`}
-              <br />
-              Bytecount: {currentSolution.length}
-            </pre>
+            <Results />
             {modalOpen && this.renderModal()}
-          </main>
+          </Main>
           <Nav />
-        </div>
-      </div>
+        </Container>
+      </Wrapper>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   modalOpen: state.ui.modalOpen,
-  currentSolution: state.ui.currentSolution
+  puzzlesCount: state.entities.puzzles.length
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onStart: () => {
     const userId = ownProps.urlParams.get('id');
-    if (userId) {
-      dispatch(fetchUserAction(userId));
-    }
-    dispatch(fetchPuzzlesAction());
+    dispatch(fetchPuzzlesAction(userId));
   },
-  cyclePuzzle: (n) => dispatch(cyclePuzzleAction(n)),
+  cyclePuzzle: (length, n) => dispatch(cyclePuzzleAction(length, n)),
   closeModal: () => dispatch(toggleModalAction(false))
 });
 

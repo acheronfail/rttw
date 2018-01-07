@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const store = createStore(rootReducer, middleware);
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.hash.replace('#', '?'));
 
 render(
   <Provider store={store}>

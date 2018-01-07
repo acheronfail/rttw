@@ -5,13 +5,19 @@ export const selectPuzzleAction = (index) => ({
 });
 
 export const CYCLE_PUZZLE = 'CYCLE_PUZZLE';
-export const cyclePuzzleAction = (n) => ({
+export const cyclePuzzleAction = (length, n) => ({
   type: CYCLE_PUZZLE,
-  payload: { n }
+  payload: { length, n }
 });
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const toggleModalAction = (flag) => ({
   type: TOGGLE_MODAL,
   payload: { flag }
+});
+
+export const UPDATE_RESULTS = 'UPDATE_RESULTS';
+export const updateResultsAction = (origin, results, resultSuccessful) => ({
+  type: UPDATE_RESULTS,
+  payload: { origin, results, resultSuccessful }
 });

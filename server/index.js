@@ -5,17 +5,11 @@ import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 
 import ServerError, { isServerError } from './errors';
+import config from 'config.json';
 
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3001);
-
-// Connection URL
-const MONGO_URL = 'mongodb://localhost:27017';
-
-// Database Name
-const DB_NAME = 'testing';
 
 // Amount of unsolved puzzles the user may see
 const VIEWABLE_PUZZLE_COUNT = 3;
@@ -39,39 +33,32 @@ const log = {
 };
 
 // Use connect method to connect to the mongodb server
-MongoClient.connect(MONGO_URL, (err, mongoClient) => {
+MongoClient.connect(config.MONGO_URL, (err, mongoClient) => {
   assert.equal(null, err);
   log.success('Connected successfully to mongodb');
 
-  const db = mongoClient.db(DB_NAME);
+  const db = mongoClient.db(config.DB_NAME);
   const usersCollection = db.collection('users');
   const puzzlesCollection = db.collection('puzzles');
 
   const getPuzzle = getPuzzleFromCollection(puzzlesCollection);
   const getUser = getUserFromCollection(usersCollection);
-  const getSolvedPuzzleCount = async (id) => Object.keys((await getUser(id)).solutions).length;
+  const getSolvedPuzzleCount = async (user) => Object.keys(user.solutions).length;
 
-  // Serve the user api
-  app.get('/api/user/:id', async (req, res) => {
-    log.api('/api/user/:id', `id: "${req.params.id}"`);
-
-    try {
-      res.json({ result: await getUser(req.params.id) });
-    } catch (err) {
-      log.error(err);
-      res.status(404).send('KO');
-    }
-  });
-
-  // Serve the puzzles
+  // This endpoint serves both the puzzles and the user inforamtion
   app.get('/api/puzzles/:id?', async (req, res) => {
-    log.api('/api/puzzles/:id?', `id: "${req.params.id}"`);
+    const { id } = req.params;
+    log.api('/api/puzzles/:id?', `id: "${id}"`);
 
-    let limit;
+    // Fetch the user and determine how many puzzles are available to them
+    let limit, user;
     try {
-      limit = VIEWABLE_PUZZLE_COUNT + (await getSolvedPuzzleCount(req.params.id));
+      user = await getUser(id);
+      limit = VIEWABLE_PUZZLE_COUNT + (await getSolvedPuzzleCount(user));
     } catch (err) {
+      // If there was no user, then just return a default
       if (isServerError(err) && err.code == ServerError.ENOENT) {
+        user = BLANK_USER;
         limit = VIEWABLE_PUZZLE_COUNT;
       } else {
         log.error(err);
@@ -84,12 +71,12 @@ MongoClient.connect(MONGO_URL, (err, mongoClient) => {
       .find()
       .limit(limit)
       .sort({ index: 1 })
-      .toArray((err, result) => {
+      .toArray((err, puzzles) => {
         if (err) {
           log.error(err);
           res.status(500).send('KO');
         } else {
-          res.json({ result });
+          res.json({ puzzles, user });
         }
       });
   });
@@ -102,7 +89,8 @@ MongoClient.connect(MONGO_URL, (err, mongoClient) => {
     let nAvailable,
       userId = id;
     try {
-      nAvailable = VIEWABLE_PUZZLE_COUNT + (await getSolvedPuzzleCount(userId));
+      const user = await getUser(userId);
+      nAvailable = VIEWABLE_PUZZLE_COUNT + (await getSolvedPuzzleCount(user));
     } catch (err) {
       nAvailable = VIEWABLE_PUZZLE_COUNT;
 
@@ -127,12 +115,10 @@ MongoClient.connect(MONGO_URL, (err, mongoClient) => {
       const puzzle = await getPuzzle(name);
       if (puzzle.index < nAvailable) {
         // Update solution in db
-        await usersCollection.updateOne(
-          { _id: ObjectId(userId) },
-          { $set: { [`solutions.${name}`]: solution } }
-        );
-        // Send back id
-        res.json({ id: userId });
+        const _id = ObjectId(userId);
+        await usersCollection.updateOne({ _id }, { $set: { [`solutions.${name}`]: solution } });
+        // Send back refreshed user data
+        res.json({ result: await getUser(_id) });
       }
     } catch (err) {
       log.error(err);
