@@ -7,7 +7,25 @@ You can visit the website here: https://acheronfail.github.io/rttw/
 
 _NOTE: Since this project is very new it may be down from time to time until I get it stable._
 
-### Design
+## Using this project
+
+This project requires the following to be installed:
+
+- [NodeJS](https://nodejs.org/en/)
+- [`yarn`](https://yarnpkg.com/en/) (install with `npm i -g yarn` once you have node)
+- [MongoDB](https://docs.mongodb.com/manual/installation/)
+
+MongoDB may be installed locally or on a server. Wherever you choose to install it, make sure that
+the server's address is updated in the file `server/config.json` so the client and server both know
+where to look for the MongoDB database.
+
+To start the project, make sure the MongoDB is running, then simply run `yarn start`, which will run 
+both the server and client.
+
+> This project currently runs in development mode, and hasn't yet been configured to run in any sort
+of production environment.
+
+### Project Design
 
 This repository contains both the server and the client.
 
