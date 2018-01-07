@@ -11,8 +11,9 @@ const { MongoClient } = require('mongodb');
 const config = require('../server/config.json');
 
 // Get puzzles and add an `index` property so MongoDB can order them
-const parsePuzzle = (puzzle, i) => {
-    puzzle.index = i;
+let index = 0;
+const parsePuzzle = (puzzle) => {
+    puzzle.index = index++;
     return puzzle;
 };
 
