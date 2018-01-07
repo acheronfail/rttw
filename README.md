@@ -34,7 +34,7 @@ host a client/server on your own then it's up to you.
 
 The repo is setup so that if you run `yarn client {command}` then the `{command}` will be sent through
 to the `client` sub-package. This makes it so you never have to change directories when working between
-the client and server. That basically means that:
+the client and server. That basically means:
 
 - `yarn client` == `cd client && yarn`
 - `yarn client start` == `cd client && yarn start`
