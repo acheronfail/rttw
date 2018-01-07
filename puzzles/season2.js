@@ -13,9 +13,9 @@ function countOnMe(x) {
         throw 'x must be an array.';
 
     for (var i = 0; i < 20; i++) {
-	if (x[i] != i) {
-            throw 'x must contain the numbers 0-19 in order';
-	}
+        if (x[i] != i) {
+                throw 'x must contain the numbers 0-19 in order';
+        }
     }
 
     return true;
@@ -202,7 +202,6 @@ function clobber(x, y) {
         name: 'typeyTypey',
         source:
 `// submitted by James
-
 verifyInput = input => {
     if (/[;(),]/.test(input)) throw 'Cannot use the following characters: ;(),';
     JSON.parse(input);
@@ -239,7 +238,6 @@ function random5(x) {
 const secret = Math.random();
 const abs = Math.abs;
 
-
 function absoluteError(a, b) {
     return abs(a - b);
 }`
@@ -255,7 +253,6 @@ function absoluteError(a, b) {
         name: 'random7',
         source:
 `// submitted by James
-
 window.quiteRandomNumber = Math.random();
 
 function random7() {
@@ -267,7 +264,6 @@ function random7() {
         name: 'random8',
         source:
 `// submitted by James
-
 window.quiteRandomNumber = Math.random();
 
 function random8() {
@@ -329,7 +325,6 @@ function invisibileCounter(x) {
         name: 'notTooLong',
         source:
 `// submitted by James
-
 const create = Object.create;
 const keys = Object.keys;
 
@@ -342,7 +337,6 @@ function notTooLong(x) {
         name: 'confusedVar',
         source:
 `// submitted by James
-
 function confusedVar(x) {
     return x == !x && x == x;
 }`
@@ -351,7 +345,6 @@ function confusedVar(x) {
         name: 'notANaN',
         source:
 `// submitted by Itay
-
 const isNaN = window.isNaN
 const eval = window.eval
 const stringify = JSON.stringify
@@ -366,7 +359,6 @@ const notANaN = (x, y) => isNaN(x) && isNaN(x(y)) && !isNaN(y) &&
         name: 'numberFunTime',
         source:
 `// submitted by James
-
 function numberFunTime(x) {
     return x * x === 0 &&
         x + 1 === 1 &&
@@ -378,7 +370,6 @@ function numberFunTime(x) {
         name: 'andBeyond',
         source:
 `// submitted by James
-
 verifyInput = input => {
     if (/\>/.test(input)) throw 'Use of the greater than symbol is forbidden.';
 };
