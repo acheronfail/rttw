@@ -3,6 +3,10 @@
 This is a clone of the great online game [return true to win](https://alf.nu/ReturnTrue). 
 I made this because the website had been down for a while and I wanted to play that game.
 
+## See it in action
+
+![return true to win page](./resources/1.png)
+
 ## Using this project
 
 #### Requirements
