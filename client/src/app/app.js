@@ -42,8 +42,8 @@ export class App extends Component {
   }
 
   // Show the congratulations dialog
-  renderModal(length) {
-    const { cyclePuzzle, puzzlesCount, closeModal } = this.props;
+  renderModal() {
+    const { cyclePuzzle, puzzlesCount, closeModal, solutionLength } = this.props;
     const modalActions = [
       { text: 'Stay', onClick: () => closeModal() },
       { text: 'Next Puzzle', onClick: () => cyclePuzzle(puzzlesCount, 1) }
@@ -53,7 +53,7 @@ export class App extends Component {
       <Modal autoFocus={true} actions={modalActions} onClose={noop} heading="Congratulations! 🎉">
         You returned <strong style={{ color: '#050' }}>true</strong>, awesome!
         <br />
-        That's your shortest solution yet: <strong>{length} bytes</strong> 👌
+        That's your shortest solution yet: <strong>{solutionLength} bytes</strong> 👌
         <br />
         <br />
         You can move on to the next puzzle, or try to find an even shorter answer for this one.
@@ -81,7 +81,9 @@ export class App extends Component {
 
 const mapStateToProps = (state) => ({
   modalOpen: state.ui.modalOpen,
-  puzzlesCount: state.entities.puzzles.length
+  puzzlesCount: state.entities.puzzles.length,
+  // FIXME: this isn't the right length
+  solutionLength: state.ui.solution.length
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
