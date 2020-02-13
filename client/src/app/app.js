@@ -43,7 +43,8 @@ export class App extends Component {
 
   // Show the congratulations dialog
   renderModal() {
-    const { cyclePuzzle, puzzlesCount, closeModal, solutionLength } = this.props;
+    const { modalState, cyclePuzzle, puzzlesCount, closeModal } = this.props;
+    const { solutionLength } = modalState;
     const modalActions = [
       { text: 'Stay', onClick: () => closeModal() },
       { text: 'Next Puzzle', onClick: () => cyclePuzzle(puzzlesCount, 1) }
@@ -62,7 +63,7 @@ export class App extends Component {
   }
 
   render() {
-    const { modalOpen } = this.props;
+    const { modalState } = this.props;
     return (
       <Wrapper>
         <Header />
@@ -70,7 +71,7 @@ export class App extends Component {
           <Main>
             <Editor />
             <Results />
-            {modalOpen && this.renderModal()}
+            {modalState && this.renderModal()}
           </Main>
           <Nav />
         </Container>
@@ -80,10 +81,8 @@ export class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  modalOpen: state.ui.modalOpen,
-  puzzlesCount: state.entities.puzzles.length,
-  // FIXME: this isn't the right length
-  solutionLength: state.ui.solution.length
+  modalState: state.ui.modalState,
+  puzzlesCount: state.entities.puzzles.length
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -92,7 +91,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(fetchPuzzlesAction(userId));
   },
   cyclePuzzle: (length, n) => dispatch(cyclePuzzleAction(length, n)),
-  closeModal: () => dispatch(toggleModalAction(false))
+  closeModal: () => dispatch(toggleModalAction(null))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -15,12 +15,10 @@ const initialUIState = {
   resultSuccessful: false,
   // Whether or not the current result has been verified by the server
   resultVerified: false,
-  // Whether or not to display the "congratulations" modal
-  modalOpen: false,
+  // The "congratulations" modal state
+  modalState: null,
   // The index of the currently selected puzzle
   selectedPuzzle: 0,
-  // The user's current solution
-  currentSolution: '',
   // In case of any server/connection errors we have a flag here
   wasError: false,
   // The latest error lives here
@@ -35,12 +33,12 @@ export const uiReducer = (uiState = initialUIState, action) => {
     case CYCLE_PUZZLE: {
       const { length, n } = action.payload;
       return Object.assign({}, uiState, {
-        modalOpen: false,
+        modalState: null,
         selectedPuzzle: cycleArray(length, uiState.selectedPuzzle + n)
       });
     }
     case TOGGLE_MODAL: {
-      return Object.assign({}, uiState, { modalOpen: action.payload.flag });
+      return Object.assign({}, uiState, { modalState: action.payload });
     }
     case UPDATE_RESULTS: {
       const { origin, solution, results, resultSuccessful } = action.payload;
@@ -66,7 +64,8 @@ export const uiReducer = (uiState = initialUIState, action) => {
       params.append('id', action.payload.user._id);
       window.location.hash = params.toString();
 
-      return Object.assign({}, uiState, { modalOpen: true });
+      const modalState = { solutionLength: uiState.solution.length };
+      return Object.assign({}, uiState, { modalState });
     }
     default: {
       return uiState;

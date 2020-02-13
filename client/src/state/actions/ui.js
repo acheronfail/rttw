@@ -11,9 +11,9 @@ export const cyclePuzzleAction = (length, n) => ({
 });
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
-export const toggleModalAction = (flag) => ({
+export const toggleModalAction = (payload) => ({
   type: TOGGLE_MODAL,
-  payload: { flag }
+  payload
 });
 
 export const UPDATE_RESULTS = 'UPDATE_RESULTS';
