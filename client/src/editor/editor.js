@@ -129,11 +129,12 @@ export class Editor extends Component {
 
       this.cm.execCommand('selectAll');
       this.cm.focus();
+      this.cm.refresh();
     }
   }
 
   render() {
-    return <Wrapper innerRef={(c) => (this.editorEl = c)} />;
+    return <Wrapper ref={(c) => (this.editorEl = c)} />;
   }
 }
 

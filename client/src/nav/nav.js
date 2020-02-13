@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { selectPuzzleAction } from '../state/actions/ui';
-import { AkFieldRadioGroup as RadioGroup } from '@atlaskit/field-radio-group';
+import { RadioGroup } from '@atlaskit/radio';
 import Lozenge from '@atlaskit/lozenge';
 
 const Wrapper = styled.nav`
@@ -20,14 +20,14 @@ const ListWrapper = styled.div`
 // TODO: when names are too long, make nav horizontally scrollable
 export class Nav extends PureComponent {
   render() {
-    const { onChange, items } = this.props;
+    const { onChange, options } = this.props;
     return (
       <Wrapper>
         <h3>Puzzles</h3>
         <ListWrapper>
           <RadioGroup
-            onRadioChange={({ target: { value } }) => onChange(value | 0)}
-            items={items}
+            onChange={({ target: { value } }) => onChange(value | 0)}
+            options={options}
           />
         </ListWrapper>
       </Wrapper>
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
   const completedPuzzles = Object.keys(user.solutions);
 
   return {
-    items: state.entities.puzzles.map(({ name: puzzleName }, i) => {
+    options: state.entities.puzzles.map(({ name: puzzleName }, i) => {
       const userSolution = user.solutions[puzzleName] || null;
       const hasCompleted = completedPuzzles.includes(puzzleName);
       const statusLabel = userSolution && `${userSolution.length} bytes`;
@@ -48,6 +48,7 @@ const mapStateToProps = (state) => {
       return {
         name: 'nav-item',
         value: `${i}`,
+        isChecked: i === state.ui.selectedPuzzle,
         label: (
           <span>
             <Lozenge appearance={hasCompleted ? 'success' : 'default'}>
@@ -57,7 +58,6 @@ const mapStateToProps = (state) => {
             {puzzleName}
           </span>
         ),
-        isSelected: i === state.ui.selectedPuzzle
       };
     })
   };
