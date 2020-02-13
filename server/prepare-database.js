@@ -17,24 +17,18 @@ const parsePuzzle = (puzzle) => {
     return puzzle;
 };
 
-MongoClient.connect(config.MONGO_URL, async (err, mongoClient) => {
+export async function prepareDatabase(mongoClient) {
     console.log('Preparing puzzles...');
     const seasonOnePuzzles = require('../puzzles/season1').map(parsePuzzle);
     const seasonTwoPuzzles = require('../puzzles/season2').map(parsePuzzle);
 
-    try {
-        const db = mongoClient.db(config.DB_NAME);
-        const puzzlesCollection = db.collection('puzzles');
-        // Remove all current puzzles
-        console.log('Removing puzzles...');
-        await puzzlesCollection.remove({}, {});
-        // Add in new puzzles
-        console.log('Adding puzzles...');
-        await puzzlesCollection.insertMany(seasonOnePuzzles);
-        await puzzlesCollection.insertMany(seasonTwoPuzzles);
-    } catch (err) {
-        console.error(err);
-    }
-
-    mongoClient.close();
-});
+    const db = mongoClient.db(config.DB_NAME);
+    const puzzlesCollection = db.collection('puzzles');
+    // Remove all current puzzles
+    console.log('Removing puzzles...');
+    await puzzlesCollection.remove({}, {});
+    // Add in new puzzles
+    console.log('Adding puzzles...');
+    await puzzlesCollection.insertMany(seasonOnePuzzles);
+    await puzzlesCollection.insertMany(seasonTwoPuzzles);
+}

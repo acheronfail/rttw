@@ -4,6 +4,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 
+import { prepareDatabase } from './prepare-database';
 import ServerError, { isServerError } from './errors';
 import config from './config.json';
 
@@ -33,9 +34,11 @@ const log = {
 };
 
 // Use connect method to connect to the mongodb server
-MongoClient.connect(config.MONGO_URL, (err, mongoClient) => {
+MongoClient.connect(config.MONGO_URL, async (err, mongoClient) => {
   assert.equal(null, err);
   log.success('Connected successfully to mongodb');
+
+  await prepareDatabase(mongoClient);
 
   const db = mongoClient.db(config.DB_NAME);
   const usersCollection = db.collection('users');
