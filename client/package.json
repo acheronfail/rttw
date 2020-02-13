@@ -16,12 +16,12 @@
     "form-data": "^2.3.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17",
     "react-redux": "^5.0.6",
+    "react-scripts": "3.3.1",
     "redux": "^3.7.2",
     "redux-observable": "^0.17.0",
     "rxjs": "^5.5.6",
-    "styled-components": "^2.4.0"
+    "styled-components": "^3.4.10"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
@@ -29,10 +29,13 @@
     "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
-    "start": "cross-env REACT_APP_VERSION=$npm_package_version cross-env BROWSER=0 react-scripts start",
+    "start": "cross-env REACT_APP_VERSION=$npm_package_version cross-env BROWSER=none react-scripts start",
     "build": "cross-env REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "yarn build && gh-pages -d build"
-  }
+  },
+  "browserslist": [
+    "> 0%"
+  ]
 }
