@@ -4,7 +4,7 @@ import entities from './reducers/entities';
 import entitiesEpic from './epics/entities';
 import ui from './reducers/ui';
 
-// TODO: only import operators that we use rather than importing the whole thing
+// TODO: get rid of rxjs and just use react hooks instead
 import 'rxjs';
 
 export const rootEpic = combineEpics(entitiesEpic);

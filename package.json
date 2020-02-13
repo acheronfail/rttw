@@ -5,26 +5,31 @@
     "dependencies": {
         "body-parser": "^1.19.0",
         "chalk": "^3.0.0",
-        "express": "^4.16.2",
-        "mongodb": "^3.0.1"
+        "express": "^4.17.1",
+        "mongodb": "^3.5.3"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/preset-env": "^7.8.4",
+        "@babel/preset-typescript": "^7.8.3",
+        "@types/mongodb": "^3.3.16",
+        "@types/node": "^12.12.27",
         "concurrently": "^5.1.0",
         "cross-env": "^7.0.0",
         "husky": "^4.2.3",
         "lint-staged": "^10.0.7",
-        "prettier": "^1.19.1"
+        "prettier": "^1.19.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^3.7.5"
     },
     "scripts": {
         "precommit": "lint-staged",
-        "start": "yarn build && concurrently --kill-others \"mongod --dbpath build/db\" \"yarn server\" \"yarn client start\"",
-        "server": "yarn build && node build/index.js",
+        "start": "yarn build && concurrently --kill-others \"mongod --dbpath build/db\" \"sleep 1; yarn server\" \"yarn client start\"",
+        "server": "node build/index.js",
         "client": "node scripts/run-in-client.js",
-        "build": "babel server -d build --copy-files --include-dotfiles --ignore spec.js,test.js",
+        "build": "rimraf build && babel server -d build --copy-files --include-dotfiles --ignore spec.js,test.js --extensions '.js,.ts'",
         "postinstall": "yarn client"
     },
     "lint-staged": {

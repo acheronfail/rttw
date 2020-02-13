@@ -4,6 +4,9 @@ export default class ServerError extends Error {
   // Error for no entry found
   static ENOENT = 1 << 0;
 
+  public code: number;
+  public date: Date;
+
   constructor(code, ...params) {
     assert.ok(code);
     assert.ok(params.length > 0);

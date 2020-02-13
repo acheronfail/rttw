@@ -17,7 +17,6 @@ const ListWrapper = styled.div`
   border: 1px solid #444;
 `;
 
-// TODO: when names are too long, make nav horizontally scrollable
 export class Nav extends PureComponent {
   render() {
     const { onChange, options } = this.props;

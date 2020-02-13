@@ -5,6 +5,7 @@
 
  module.exports = [
     {
+        index: 0,
         name: 'id',
         source:
 `function id(x) {
@@ -12,6 +13,7 @@
 }`
     },
     {
+        index: 1,
         name: 'reflexive',
         source:
 `function reflexive(x) {
@@ -19,6 +21,7 @@
 }`
     },
     {
+        index: 2,
         name: 'infinity',
         source:
 `// submitted by 'dat boi'
@@ -27,6 +30,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 3,
         name: 'transitive',
         source:
 `function transitive(x,y,z) {
@@ -34,6 +38,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 4,
         name: 'counter',
         source:
 `function counter(f) {
@@ -43,6 +48,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 5,
         name: 'peano',
         source:
 `function peano(x) {
@@ -50,6 +56,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 6,
         name: 'array',
         source:
 `function array(x,y) {
@@ -58,6 +65,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 7,
         name: 'instance',
         source:
 `function instance(x,y) {
@@ -65,6 +73,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 8,
         name: 'instance2',
         source:
 `function instance2(a,b,c) {
@@ -75,6 +84,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 9,
         name: 'proto1',
         source:
 `function proto1(x) {
@@ -82,6 +92,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 10,
         name: 'undef',
         source:
 `function undef(x) {
@@ -89,6 +100,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 11,
         name: 'symmetric',
         source:
 `function symmetric(x,y) {
@@ -96,6 +108,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 12,
         name: 'ouroborobj',
         source:
 `function ouroborobj(x) {
@@ -103,6 +116,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 13,
         name: 'truth',
         source:
 `function truth(x) {
@@ -110,6 +124,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 14,
         name: 'wat',
         source:
 `function wat(x) {
@@ -117,6 +132,7 @@ function infinity(x, y) {
 }`
     },
     {
+        index: 15,
         name: 'evil1',
         source:
 `var eval = window.eval;
@@ -125,6 +141,7 @@ function evil1(x) {
 }`
     },
     {
+        index: 16,
         name: 'evil2',
         source:
 `var eval = window.eval;
@@ -133,6 +150,7 @@ function evil2(x) {
 }`
     },
     {
+        index: 17,
         name: 'evil3',
         source:
 `var eval = window.eval;
@@ -142,6 +160,7 @@ function evil3(parameter) {
 }`
     },
     {
+        index: 18,
         name: 'random1',
         source:
 `function random1(x) {
@@ -149,6 +168,7 @@ function evil3(parameter) {
 }`
     },
     {
+        index: 19,
         name: 'random2',
         source:
 `var rand = Math.random();
@@ -157,6 +177,7 @@ function random2(x) {
 }`
     },
     {
+        index: 20,
         name: 'random3',
         source:
 `var key = crypto.getRandomValues(new Uint32Array(4));
@@ -169,6 +190,7 @@ function random3(x) {
 }`
     },
     {
+        index: 21,
         name: 'random4',
         source:
 `var rand = Math.random();
@@ -177,6 +199,7 @@ function random4(x) {
 }`
     },
     {
+        index: 22,
         name: 'total',
         source:
 `function total(x) {
@@ -184,6 +207,7 @@ function random4(x) {
 }`
     },
     {
+        index: 23,
         name: 'json',
         source:
 `// submitted by azzola 

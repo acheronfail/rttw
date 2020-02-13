@@ -5,6 +5,7 @@
 
 module.exports = [
     {
+        index: 24,
         name: 'countOnMe',
         source:
 `// submitted by James
@@ -22,6 +23,7 @@ function countOnMe(x) {
 }`
     },
     {
+        index: 25,
         name: 'countOnMe2',
         source:
 `// submitted by James
@@ -39,6 +41,7 @@ function countOnMe2(x) {
 }`
     },
     {
+        index: 26,
         name: 'countOnMe3',
         source:
 `// submitted by James
@@ -63,6 +66,7 @@ function countOnMe3(x) {
 }`
     },
     {
+        index: 27,
         name: 'instance3',
         source:
 `// submitted by @smelukov
@@ -73,6 +77,7 @@ function instance3(x) {
 }`
     },
     {
+        index: 28,
         name: 'letsgo',
         source:
 `// submitted by MAY✪R 
@@ -82,6 +87,7 @@ function letsgo(x) {
 }`
     },
     {
+        index: 29,
         name: 'associative',
         source:
 `// submitted by Stephen Leppik
@@ -93,6 +99,7 @@ function associative(x, y, z) {
 }`
     },
     {
+        index: 30,
         name: 'base64',
         source:
 `// Andrew Sillers
@@ -112,6 +119,7 @@ function base64(x, y) {
 }`
     },
     {
+        index: 31,
         name: 'base65',
         source:
 `// Andrew Sillers
@@ -133,6 +141,7 @@ function base65(x, y) {
 }`
     },
     {
+        index: 32,
         name: 'base66',
         source:
 `// Andrew Sillers
@@ -154,6 +163,7 @@ function base66(x, y) {
 }`
     },
     {
+        index: 33,
         name: 'decorator',
         source:
 `// AndreiSoroka
@@ -165,6 +175,7 @@ function decorator(obj) {
 }`
     },
     {
+        index: 34,
         name: 'e_aluate',
         source:
 `// Andrew Sillers
@@ -178,6 +189,7 @@ function e_aluate(v) {
 }`
     },
     {
+        index: 35,
         name: 'clobber',
         source:
 `// Andrew Sillers
@@ -199,6 +211,7 @@ function clobber(x, y) {
 }`
     },
     {
+        index: 36,
         name: 'typeyTypey',
         source:
 `// submitted by James
@@ -214,6 +227,7 @@ function typeyTypey(a) {
 }`
     },
     {
+        index: 37,
         name: 'random5',
         source:
 `// James/Alf
@@ -232,6 +246,7 @@ function random5(x) {
 }`
     },
     {
+        index: 38,
         name: 'random6',
         source:
 `// James/Alf
@@ -243,6 +258,7 @@ function absoluteError(a, b) {
 }`
     },
     {
+        index: 39,
         name: '',
         source:
 `function random6(x) {
@@ -250,6 +266,7 @@ function absoluteError(a, b) {
 }`
     },
     {
+        index: 40,
         name: 'random7',
         source:
 `// submitted by James
@@ -261,6 +278,7 @@ function random7() {
 }`
     },
     {
+        index: 41,
         name: 'random8',
         source:
 `// submitted by James
@@ -272,6 +290,7 @@ function random8() {
 }`
     },
     {
+        index: 42,
         name: 'myPlanetNeedsMe',
         source:
 `// submitted by James
@@ -289,6 +308,7 @@ function myPlanetNeedsMe() {
 }`
     },
     {
+        index: 43,
         name: 'math',
         source:
 `function math(x) {
@@ -296,6 +316,7 @@ function myPlanetNeedsMe() {
 }`
     },
     {
+        index: 44,
         name: 'invisibleCounter',
         source:
 `// submitted by James
@@ -322,6 +343,7 @@ function invisibileCounter(x) {
 }`
     },
     {
+        index: 45,
         name: 'notTooLong',
         source:
 `// submitted by James
@@ -334,6 +356,7 @@ function notTooLong(x) {
 }`
     },
     {
+        index: 46,
         name: 'confusedVar',
         source:
 `// submitted by James
@@ -342,6 +365,7 @@ function confusedVar(x) {
 }`
     },
     {
+        index: 47,
         name: 'notANaN',
         source:
 `// submitted by Itay
@@ -356,6 +380,7 @@ const notANaN = (x, y) => isNaN(x) && isNaN(x(y)) && !isNaN(y) &&
 `
     },
     {
+        index: 48,
         name: 'numberFunTime',
         source:
 `// submitted by James
@@ -367,6 +392,7 @@ function numberFunTime(x) {
 }`
     },
     {
+        index: 49,
         name: 'andBeyond',
         source:
 `// submitted by James
