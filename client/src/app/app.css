@@ -50,7 +50,7 @@ nav > div > div > label {
   content: '';
 }
 
-.rainbow-wrapper * {
+.rainbow-wrapper > * {
   display: block;
   width: var(--rainbow-button-width-inner);
   height: var(--rainbow-button-height-inner);
@@ -62,7 +62,6 @@ nav > div > div > label {
   border-radius: 4px;
   background: white;
   color: black;
-  font-size: 1.3rem;
 }
 
 .rainbow-wrapper:hover:before {

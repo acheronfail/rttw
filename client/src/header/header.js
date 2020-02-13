@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import ToolTip from '@atlaskit/tooltip';
 
@@ -28,7 +29,8 @@ const appLogoSpin = keyframes`
   }
 `;
 
-const Logo = styled.div`
+
+const makeLogo = () => styled.div`
   animation: ${appLogoSpin} 1.5s ease-in-out;
   width: 200px;
   height: 50px;
@@ -41,15 +43,20 @@ const Logo = styled.div`
 `;
 
 const TitleButton = styled.button`
-  font-size: 1.5em;
+  font-size: 20px;
 `;
 
 export class Header extends PureComponent {
   render() {
+    const { title } = this.props;
+
+    // Generate a new one of these each render to the animation replays each time.
+    const Logo = makeLogo();
+
     return (
       <Wrapper>
         <Logo>
-          <code>return true</code>
+          <code>{title}</code>
         </Logo>
         <ToolTip content="Give the correct input so the function returns true!" position="bottom">
           <div className="rainbow-wrapper">
@@ -61,4 +68,11 @@ export class Header extends PureComponent {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  const selectedPuzzle = state.entities.puzzles[state.ui.selectedPuzzle];
+  return {
+    title: selectedPuzzle ? selectedPuzzle.name : 'return true'
+  };
+};
+
+export default connect(mapStateToProps)(Header);
