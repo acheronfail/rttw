@@ -4,7 +4,7 @@ export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const SET_SHOW_SIDEBAR = 'SET_SHOW_SIDEBAR';
 export const SET_EDITOR_OPTION = 'SET_EDITOR_OPTION';
 export const SET_SELECTED_PUZZLE = 'SET_SELECTED_PUZZLE';
-export const SET_FIRST_UNSOLVED_PUZZLE = 'SET_FIRST_UNSOLVED_PUZZLE';
+export const SET_NEXT_UNSOLVED_PUZZLE = 'SET_NEXT_UNSOLVED_PUZZLE';
 export const SET_PUZZLES = 'SET_PUZZLES';
 export const SET_USER = 'SET_USER';
 export const SET_SOLVED_MODAL_STATE = 'SET_SOLVED_MODAL_STATE';
@@ -33,8 +33,8 @@ export const setSelectedPuzzleAction = (payload: number) => ({
   payload,
 });
 
-export const setFirstUnsolvedPuzzleAction = () => ({
-  type: SET_FIRST_UNSOLVED_PUZZLE as typeof SET_FIRST_UNSOLVED_PUZZLE,
+export const setNextUnsolvedPuzzleAction = () => ({
+  type: SET_NEXT_UNSOLVED_PUZZLE as typeof SET_NEXT_UNSOLVED_PUZZLE,
 });
 
 export const setPuzzlesAction = (payload: Puzzle[]) => ({
@@ -63,7 +63,7 @@ export type ActionPayload =
   | ReturnType<typeof setShowSidebarAction>
   | ReturnType<typeof setEditorConfigAction>
   | ReturnType<typeof setSelectedPuzzleAction>
-  | ReturnType<typeof setFirstUnsolvedPuzzleAction>
+  | ReturnType<typeof setNextUnsolvedPuzzleAction>
   | ReturnType<typeof setPuzzlesAction>
   | ReturnType<typeof setUserAction>
   | ReturnType<typeof setSolvedModalStateAction>

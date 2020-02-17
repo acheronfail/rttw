@@ -6,7 +6,7 @@ import {
   SET_SELECTED_PUZZLE,
   SET_USER,
   SET_PUZZLES,
-  SET_FIRST_UNSOLVED_PUZZLE,
+  SET_NEXT_UNSOLVED_PUZZLE,
   SET_SOLVED_MODAL_STATE,
 } from './actions';
 
@@ -86,13 +86,13 @@ export function reducer(state: State, action: ActionPayload): State {
       return { ...state, client: { ...state.client, codemirror: { ...state.client.codemirror, ...action.payload } } };
     case SET_SELECTED_PUZZLE:
       return { ...state, client: { ...state.client, selectedPuzzleIndex: action.payload } };
-    case SET_FIRST_UNSOLVED_PUZZLE:
-      const puzzlesSolved = Object.keys(state.server.user.solutions);
-      const selectedPuzzleIndex = Math.max(
-        0,
-        state.server.puzzles.findIndex(p => !puzzlesSolved.includes(p.name)),
-      );
-      return { ...state, client: { ...state.client, selectedPuzzleIndex } };
+    case SET_NEXT_UNSOLVED_PUZZLE:
+      const { puzzles, user } = state.server;
+      const { selectedPuzzleIndex: i } = state.client;
+      const solved = Object.keys(user.solutions);
+      const puzzlesFromCurrentIndex = puzzles.slice(i).concat(puzzles.slice(0, i));
+      const index = Math.max(0, puzzlesFromCurrentIndex.findIndex(p => !solved.includes(p.name))) + i;
+      return { ...state, client: { ...state.client, selectedPuzzleIndex: index } };
     case SET_PUZZLES:
       return { ...state, server: { ...state.server, puzzles: action.payload } };
     case SET_USER:

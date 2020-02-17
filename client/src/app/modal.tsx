@@ -2,7 +2,7 @@ import { Box, Layer, Keyboard, Markdown } from 'grommet';
 import React from 'react';
 import Button from '../button';
 import { useStoreContext } from '../store';
-import { closeSolvedModalAction, setFirstUnsolvedPuzzleAction } from '../store/actions';
+import { closeSolvedModalAction, setNextUnsolvedPuzzleAction } from '../store/actions';
 
 const modalMessage = (solutionLength: number) => `
 ## Congratulations! 🎉
@@ -21,7 +21,7 @@ export function SolvedModal() {
 
   const closeModal = () => dispatch(closeSolvedModalAction());
   const nextPuzzle = () => {
-    dispatch(setFirstUnsolvedPuzzleAction());
+    dispatch(setNextUnsolvedPuzzleAction());
     closeModal();
   };
 

@@ -5,7 +5,7 @@ import { Editor } from '../editor';
 import Header from '../header';
 import { Sidebar } from '../sidebar';
 import { useStoreContext } from '../store';
-import { setFirstUnsolvedPuzzleAction } from '../store/actions';
+import { setNextUnsolvedPuzzleAction } from '../store/actions';
 import { SolvedModal } from './modal';
 import * as themes from './themes';
 
@@ -21,7 +21,7 @@ function App({ urlParams }: AppProps) {
   useEffect(() => {
     getPuzzles(urlParams.get('id'), dispatch).then(() => {
       // Select first unsolved puzzle.
-      dispatch(setFirstUnsolvedPuzzleAction());
+      dispatch(setNextUnsolvedPuzzleAction());
     });
     // NOTE: we only want this to run once, so no dependencies here.
     // eslint-disable-next-line
