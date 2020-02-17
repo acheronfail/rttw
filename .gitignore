@@ -1,12 +1,13 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
-
 # dependencies
+/client/node_modules
 /node_modules
 
 # testing
+/client/coverage
 /coverage
 
 # production
+/client/build
 /build
 
 # misc
@@ -19,3 +20,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Editor
+.vscode
+.idea

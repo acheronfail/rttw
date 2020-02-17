@@ -91,7 +91,11 @@ export function reducer(state: State, action: ActionPayload): State {
       const { selectedPuzzleIndex: i } = state.client;
       const solved = Object.keys(user.solutions);
       const puzzlesFromCurrentIndex = puzzles.slice(i).concat(puzzles.slice(0, i));
-      const index = Math.max(0, puzzlesFromCurrentIndex.findIndex(p => !solved.includes(p.name))) + i;
+      const index =
+        Math.max(
+          0,
+          puzzlesFromCurrentIndex.findIndex(p => !solved.includes(p.name)),
+        ) + i;
       return { ...state, client: { ...state.client, selectedPuzzleIndex: index } };
     case SET_PUZZLES:
       return { ...state, server: { ...state.server, puzzles: action.payload } };
