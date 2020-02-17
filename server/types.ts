@@ -5,7 +5,6 @@ export interface DocumentPuzzle {
 }
 
 export interface DocumentUser {
-  username: string;
   solutions: Record<string, string>;
 }
 
@@ -13,6 +12,5 @@ export interface DocumentUser {
 export const VIEWABLE_PUZZLE_COUNT = 3;
 
 export const BLANK_USER: DocumentUser = {
-  username: null,
   solutions: {}
 };

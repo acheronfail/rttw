@@ -1,0 +1,12 @@
+# Ignore project generated files
+tsconfig.json
+tsconfig.root.json
+
+# Don't ignore the project's tsconfig.json file
+!/tsconfig.json
+
+# Ignore generated changelog files.
+CHANGELOG.md
+
+# Ignore coverage.
+coverage/**

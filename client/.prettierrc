@@ -1,0 +1,18 @@
+arrowParens: 'avoid'
+bracketSpacing: true
+jsxBracketSameLine: false
+printWidth: 120
+semi: true
+singleQuote: true
+tabWidth: 2
+trailingComma: 'all'
+useTabs: false
+
+overrides:
+  # TODO: when prettier fixes their markdown bug with lists, ensure all markdown
+  # lists are formatted correctly.
+  # See: https://github.com/prettier/prettier/issues/3223
+  - files: '*.md'
+    options:
+      useTabs: false
+      tabWidth: 4

@@ -26,8 +26,8 @@
     },
     "scripts": {
         "precommit": "lint-staged",
-        "start": "yarn build && concurrently --kill-others \"mongod --dbpath build/db\" \"sleep 1; yarn server\" \"yarn client start\"",
-        "server": "node build/index.js",
+        "start": "yarn build && concurrently --kill-others \"yarn server\" \"yarn client start\"",
+        "server": "yarn build && concurrently --kill-others \"mongod --dbpath build/db\" \"sleep 1; node build/index.js\"",
         "client": "node scripts/run-in-client.js",
         "build": "rimraf build && babel server -d build --copy-files --include-dotfiles --ignore spec.js,test.js --extensions '.js,.ts'",
         "postinstall": "yarn client"
