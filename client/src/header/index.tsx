@@ -4,6 +4,8 @@ import React from 'react';
 import { useStoreContext } from '../store';
 import { setDarkModeAction, setShowSidebarAction } from '../store/actions';
 
+const PUZZLE_TITLE_STYLE = { fontStyle: 'italic' };
+
 export function Header() {
   const { state, dispatch } = useStoreContext();
   const { darkMode, showSidebar, selectedPuzzleIndex } = state.client;
@@ -24,7 +26,7 @@ export function Header() {
       <Heading level="3" margin="none">
         Return True To Win
       </Heading>
-      <Heading level="4" margin={{ horizontal: '20px', vertical: 'none' }}>
+      <Heading level="4" style={PUZZLE_TITLE_STYLE} margin={{ horizontal: '20px', vertical: 'none' }}>
         {puzzles[selectedPuzzleIndex]?.name}
       </Heading>
       <Box flex direction="row" align="end" justify="end">
