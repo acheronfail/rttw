@@ -1,4 +1,8 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../puzzles", "src"]
+  "include": ["../server/**/*.ts", "../server/**/*.json"],
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./build"
+  }
 }

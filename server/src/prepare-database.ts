@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
-import { season1 } from '../../puzzles/season1';
-import { season2 } from '../../puzzles/season2';
+import { season1 } from '../puzzles/season1';
+import { season2 } from '../puzzles/season2';
 import { config } from './config';
 
 export async function prepareDatabase(mongoClient: MongoClient) {

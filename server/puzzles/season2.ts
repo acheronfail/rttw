@@ -1,4 +1,4 @@
-import { DocumentPuzzle } from 'server/src/types';
+import { DocumentPuzzle } from '../src/types';
 
 /**
  * These puzzles belong to the orignal author of Return True To Win.

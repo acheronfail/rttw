@@ -35,6 +35,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "build": "concurrently 'yarn client:build' 'yarn server:build'",
+    "client:build": "yarn client build",
+    "client:start": "yarn client start",
     "client": "node scripts/run-in-client.js",
     "db:prepare": "rimraf build && mkdirp build/db",
     "lint:eslint:errors": "yarn lint:eslint --quiet",
@@ -44,9 +47,9 @@
     "lint": "yarn lint:eslint && yarn lint:prettier --check",
     "postinstall": "yarn client && yarn db:prepare",
     "precommit": "lint-staged",
-    "start:client": "yarn client start",
-    "start:server": "concurrently --kill-others \"mongod --dbpath build/db\" \"sleep 1; ts-node server/src/index.ts\"",
-    "start": "concurrently --kill-others \"yarn start:server\" \"yarn start:client\""
+    "server:build": "tsc --project ./server/tsconfig.json",
+    "server:start": "concurrently --kill-others 'mongod --dbpath build/db' 'sleep 1; ts-node server/src/index.ts'",
+    "start": "concurrently --kill-others 'yarn server:start' 'yarn client:start'"
   },
   "husky": {
     "hooks": {
@@ -55,7 +58,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{j,t}s": [
+    "**/*.{j,t}s{,x}": [
       "eslint --fix",
       "git add"
     ],
