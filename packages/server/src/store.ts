@@ -1,8 +1,9 @@
 import { BLANK_USER, Puzzle, User } from '@rttw/common';
 import { Collection, Db, MongoClient, MongoClientOptions, ObjectId } from 'mongodb';
+import { season1 } from '../puzzles/season1';
+import { season2 } from '../puzzles/season2';
 import { config } from './config';
 import StoreError, { isStoreError } from './errors';
-import { prepareDatabase } from './prepare-database';
 
 export type Config = typeof config;
 
@@ -22,15 +23,22 @@ export class Store {
     this._collectionPuzzles = this._db.collection('puzzles');
   }
 
+  // TODO: Don't delete puzzles each time the database is restarted.
+  private async prepare(): Promise<void> {
+    await this._collectionPuzzles.deleteMany({});
+    await this._collectionPuzzles.insertMany(season1.concat(season2));
+  }
+
   public static create(config: Config): Promise<Store> {
     return new Promise((resolve, reject) => {
       MongoClient.connect(config.MONGO_URL, MONGO_CLIENT_OPTIONS, async (err, mongoClient) => {
         if (err) {
           reject(err);
         } else {
-          await prepareDatabase(mongoClient);
           const db = mongoClient.db(config.DB_NAME);
-          resolve(new Store(mongoClient, db));
+          const store = new Store(mongoClient, db);
+          await store.prepare();
+          resolve(store);
         }
       });
     });
@@ -92,18 +100,10 @@ export class Store {
   }
 
   public async getPuzzles(limit: number): Promise<Puzzle[]> {
-    return new Promise((resolve, reject) => {
-      this._collectionPuzzles
-        .find()
-        .limit(limit)
-        .sort({ index: 1 })
-        .toArray((err, puzzles) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(puzzles);
-          }
-        });
-    });
+    return this._collectionPuzzles
+      .find()
+      .limit(limit)
+      .sort({ index: 1 })
+      .toArray();
   }
 }
