@@ -55,6 +55,7 @@ export const initialState: State = {
       mode: 'javascript',
       theme: 'monokai',
       keyMap: 'default',
+      tabSize: 2,
     },
     selectedPuzzleIndex: 0,
     solvedModal: {
