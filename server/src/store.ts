@@ -1,9 +1,9 @@
-import { MongoClient, ObjectId, Db, Collection } from "mongodb";
+import { MongoClient, ObjectId, Db, Collection } from 'mongodb';
 
-import { prepareDatabase } from "./prepare-database";
-import ServerError from "./errors";
-import config from "./config.json";
-import { DocumentUser, DocumentPuzzle, BLANK_USER } from "./types";
+import { config } from './config';
+import ServerError from './errors';
+import { prepareDatabase } from './prepare-database';
+import { DocumentUser, DocumentPuzzle, BLANK_USER } from './types';
 
 export type Config = typeof config;
 
@@ -15,8 +15,8 @@ export class Store {
   private constructor(mongoClient: MongoClient, db: Db) {
     this._mongoClient = mongoClient;
     this._db = db;
-    this._collectionUsers = this._db.collection("users");
-    this._collectionPuzzles = this._db.collection("puzzles");
+    this._collectionUsers = this._db.collection('users');
+    this._collectionPuzzles = this._db.collection('puzzles');
   }
 
   public static create(config: Config): Promise<Store> {
@@ -39,36 +39,25 @@ export class Store {
 
   public async getUser(id: ObjectId): Promise<DocumentUser> {
     return new Promise((resolve, reject) => {
-      this._collectionUsers
-        .find({ _id: new ObjectId(id) })
-        .toArray((err, docs) => {
-          if (err) {
-            reject(err);
-          } else if (docs.length == 0) {
-            reject(new ServerError(ServerError.ENOENT, "no user found"));
-          } else {
-            resolve(docs[0]);
-          }
-        });
+      this._collectionUsers.find({ _id: new ObjectId(id) }).toArray((err, docs) => {
+        if (err) {
+          reject(err);
+        } else if (docs.length == 0) {
+          reject(new ServerError(ServerError.ENOENT, 'no user found'));
+        } else {
+          resolve(docs[0]);
+        }
+      });
     });
   }
 
   public async addUser(): Promise<{ insertedId: ObjectId }> {
-    const { insertedId } = await this._collectionUsers.insertOne(
-      Object.assign({}, BLANK_USER)
-    );
+    const { insertedId } = await this._collectionUsers.insertOne(Object.assign({}, BLANK_USER));
     return { insertedId };
   }
 
-  public async updateUserSolution(
-    id: ObjectId,
-    name: string,
-    solution: string
-  ): Promise<void> {
-    await this._collectionUsers.updateOne(
-      { _id: id },
-      { $set: { [`solutions.${name}`]: solution } }
-    );
+  public async updateUserSolution(id: ObjectId, name: string, solution: string): Promise<void> {
+    await this._collectionUsers.updateOne({ _id: id }, { $set: { [`solutions.${name}`]: solution } });
   }
 
   public async getPuzzle(name: string): Promise<DocumentPuzzle> {
@@ -77,7 +66,7 @@ export class Store {
         if (err) {
           reject(err);
         } else if (docs.length == 0) {
-          reject(new ServerError(ServerError.ENOENT, "no puzzle found"));
+          reject(new ServerError(ServerError.ENOENT, 'no puzzle found'));
         } else {
           resolve(docs[0]);
         }

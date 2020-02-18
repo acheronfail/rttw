@@ -1,5 +1,3 @@
-import assert from 'assert';
-
 export default class ServerError extends Error {
   // Error for no entry found
   static ENOENT = 1 << 0;
@@ -7,11 +5,8 @@ export default class ServerError extends Error {
   public code: number;
   public date: Date;
 
-  constructor(code, ...params) {
-    assert.ok(code);
-    assert.ok(params.length > 0);
-
-    super(...params);
+  constructor(code: number, message: string) {
+    super(message);
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
@@ -24,4 +19,4 @@ export default class ServerError extends Error {
   }
 }
 
-export const isServerError = (err) => err instanceof ServerError;
+export const isServerError = (err: Error) => err instanceof ServerError;

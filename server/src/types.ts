@@ -12,5 +12,5 @@ export interface DocumentUser {
 export const VIEWABLE_PUZZLE_COUNT = 3;
 
 export const BLANK_USER: DocumentUser = {
-  solutions: {}
+  solutions: {},
 };

@@ -1,11 +1,12 @@
+import { Request, Response } from 'express';
+import { ObjectId } from 'mongodb';
+import ServerError, { isServerError } from '../errors';
 import log from '../logger';
 import { Store } from '../store';
-import ServerError, { isServerError } from '../errors';
-import { ObjectId } from 'mongodb';
 import { VIEWABLE_PUZZLE_COUNT } from '../types';
 import { getSolvedPuzzleCount } from '../utils';
 
-export const apiSubmit = (store: Store) => async (req, res) => {
+export const apiSubmit = (store: Store) => async (req: Request, res: Response) => {
   const { id, name, solution } = req.body;
   log.api('/api/submit', `id: "${id}"`, `name: "${name}"`, `solution: "${solution}"`);
 
