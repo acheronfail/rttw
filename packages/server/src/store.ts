@@ -1,5 +1,5 @@
-import { User, Puzzle, BLANK_USER } from '@rttw/common';
-import { MongoClient, ObjectId, Db, Collection } from 'mongodb';
+import { BLANK_USER, Puzzle, User } from '@rttw/common';
+import { Collection, Db, MongoClient, ObjectId } from 'mongodb';
 import { config } from './config';
 import ServerError from './errors';
 import { prepareDatabase } from './prepare-database';

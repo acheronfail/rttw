@@ -1,5 +1,5 @@
 import { Box, Button as GrommetButton, ButtonProps as GrommetButtonProps } from 'grommet';
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export interface ButtonProps extends GrommetButtonProps, Omit<JSX.IntrinsicElements['button'], 'color'> {
   label: string;

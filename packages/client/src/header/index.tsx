@@ -1,4 +1,4 @@
-import { Box, Button, Heading, CheckBox } from 'grommet';
+import { Box, Button, CheckBox, Heading } from 'grommet';
 import { List } from 'grommet-icons';
 import React from 'react';
 import { useStoreContext } from '../store';

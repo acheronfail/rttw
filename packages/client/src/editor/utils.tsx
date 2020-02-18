@@ -1,5 +1,5 @@
 import { Puzzle } from '@rttw/common';
-import { Editor, TextMarkerOptions, TextMarker, EditorChange } from 'codemirror';
+import { Editor, EditorChange, TextMarker, TextMarkerOptions } from 'codemirror';
 import { TestResult } from './eval';
 
 export const EVAL_WAIT_TIME = 300;

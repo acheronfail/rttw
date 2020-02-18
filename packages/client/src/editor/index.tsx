@@ -1,7 +1,7 @@
 import CodeMirror from 'codemirror';
 import { debounce } from 'debounce';
 import { Box, Select, Text } from 'grommet';
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { submitSolution } from '../api';
 import { getColor } from '../app/themes';
 import { useStoreContext } from '../store';
@@ -9,7 +9,7 @@ import { setEditorConfigAction } from '../store/actions';
 import { testInIframe } from './eval';
 import { keyMaps } from './key-map';
 import { themes } from './theme';
-import { renderPuzzleIntoCodeMirror, EVAL_WAIT_TIME, updateResultInCodeMirror } from './utils';
+import { EVAL_WAIT_TIME, renderPuzzleIntoCodeMirror, updateResultInCodeMirror } from './utils';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';

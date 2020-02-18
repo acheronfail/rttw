@@ -1,6 +1,6 @@
-import React, { createContext, Props, useReducer, Dispatch, useContext } from 'react';
+import React, { Dispatch, Props, createContext, useContext, useReducer } from 'react';
 import { ActionPayload, setPuzzlesAction } from './actions';
-import { reducer, initialState, State } from './reducer';
+import { State, initialState, reducer } from './reducer';
 
 export interface Store {
   state: State;

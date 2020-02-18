@@ -1,4 +1,4 @@
-import { VIEWABLE_PUZZLE_COUNT, ApiPostSubmitResponse, ApiPostSubmitRequest } from '@rttw/common';
+import { ApiPostSubmitRequest, ApiPostSubmitResponse, VIEWABLE_PUZZLE_COUNT } from '@rttw/common';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import ServerError, { isServerError } from '../errors';

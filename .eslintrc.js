@@ -28,13 +28,17 @@ module.exports = {
     'prefer-rest-params': 0,
     'jest/no-export': 0,
     strict: 2,
-    'import/order': [
+    // Configure 'sort-imports' so it doesn't conflict with 'import/order'.
+    // This sorts imports within braces, eg: import { <sorted> } from 'x';
+    'sort-imports': [
       'error',
       {
-        groups: ['builtin', 'external', 'parent', 'sibling', 'internal', 'index'],
-        alphabetize: { order: 'asc' },
+        ignoreDeclarationSort: true,
+        ignoreMemberSort: false,
       },
     ],
+    // This orders imports by their module, eg: import x from '<sorted>';
+    'import/order': 2,
     'import/no-duplicates': ['error', { considerQueryString: true }],
     'import/no-extraneous-dependencies': ['error'],
   },

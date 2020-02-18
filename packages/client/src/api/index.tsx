@@ -1,7 +1,7 @@
 import { ApiGetPuzzlesResponse, ApiPostSubmitResponse } from '@rttw/common';
 import { Dispatch } from 'react';
 import { TestResult } from '../editor/eval';
-import { ActionPayload, setPuzzlesAction, setUserAction, setSolvedModalStateAction } from '../store/actions';
+import { ActionPayload, setPuzzlesAction, setSolvedModalStateAction, setUserAction } from '../store/actions';
 
 type ServerResponse<T> = {
   response: Response;

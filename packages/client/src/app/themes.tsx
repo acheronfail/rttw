@@ -1,4 +1,4 @@
-import { base, ThemeType } from 'grommet';
+import { ThemeType, base } from 'grommet';
 import { deepMerge } from 'grommet/utils';
 
 // TODO: update themes, for some examples:

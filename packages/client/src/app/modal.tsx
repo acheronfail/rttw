@@ -1,4 +1,4 @@
-import { Box, Layer, Keyboard, Markdown } from 'grommet';
+import { Box, Keyboard, Layer, Markdown } from 'grommet';
 import React from 'react';
 import Button from '../button';
 import { useStoreContext } from '../store';

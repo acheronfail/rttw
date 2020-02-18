@@ -1,14 +1,14 @@
-import { User, Puzzle } from '@rttw/common';
+import { Puzzle, User } from '@rttw/common';
 import {
   ActionPayload,
   SET_DARK_MODE,
-  SET_SHOW_SIDEBAR,
   SET_EDITOR_OPTION,
-  SET_SELECTED_PUZZLE,
-  SET_USER,
-  SET_PUZZLES,
   SET_NEXT_UNSOLVED_PUZZLE,
+  SET_PUZZLES,
+  SET_SELECTED_PUZZLE,
+  SET_SHOW_SIDEBAR,
   SET_SOLVED_MODAL_STATE,
+  SET_USER,
 } from './actions';
 
 export interface SolvedModalState {
