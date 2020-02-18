@@ -30,6 +30,11 @@ function runInIframe(puzzle: Puzzle, userInput: string) {
 ${puzzle.source};
 
   window['${puzzle.name}'] = ${puzzle.name};
+
+  if (window.verifyInput) {
+    window.verifyInput(${JSON.stringify(userInput)});
+  }
+
 })();
 
     ${puzzle.name}(${userInput})
