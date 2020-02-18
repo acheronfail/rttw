@@ -74,7 +74,7 @@ export const initialState: State = {
 };
 
 export function reducer(state: State, action: ActionPayload): State {
-  if (process.env.NODE_ENV) {
+  if (process.env.NODE_ENV === 'development') {
     console.log(action.type);
   }
 
