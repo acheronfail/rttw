@@ -6,7 +6,7 @@ import { submitSolution } from '../api';
 import { getColor } from '../app/themes';
 import { useStoreContext } from '../store';
 import { setEditorConfigAction } from '../store/actions';
-import { testLocal } from './eval';
+import { testInIframe } from './eval';
 import { keyMaps } from './key-map';
 import { themes } from './theme';
 import { renderPuzzleIntoCodeMirror, EVAL_WAIT_TIME, updateResultInCodeMirror } from './utils';
@@ -92,7 +92,7 @@ export function Editor() {
         // we shouldn't try to run any tests since that's us changing the editor,
         // not the user.
         if (changes?.length) {
-          const result = testLocal(cm, puzzle, previousSolution);
+          const result = testInIframe(cm, puzzle, previousSolution);
           updateResultInCodeMirror(cm, result);
           if (result.shouldUpdateSolution) {
             submitSolution(user._id, result, dispatch);

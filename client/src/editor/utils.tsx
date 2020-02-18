@@ -11,7 +11,6 @@ const EMPTY_TEST_RESULT: TestResult = {
   shouldUpdateSolution: false,
   name: '',
   solution: '',
-  passed: false,
   error: '<no input>',
 };
 const MARKER_BEFORE_OPTIONS = {
@@ -53,7 +52,7 @@ ${puzzle.name}(`;
 // The text after the editable region.
 const afterMarkerText = (result: TestResult) => `);
 
-// Result: ${result.passed ? true : result.error}
+// Result: ${result.result}
 // Length: ${result.solution.length}
 `;
 
@@ -101,7 +100,7 @@ export function renderPuzzleIntoCodeMirror(options: RenderPuzzleIntoCodeMirrorOp
   const before = beforeMarkerText(puzzle);
   const after = afterMarkerText(
     previousSolution
-      ? { name: puzzle.name, shouldUpdateSolution: false, solution: previousSolution, passed: true }
+      ? { name: puzzle.name, shouldUpdateSolution: false, solution: previousSolution, result: 'true' }
       : EMPTY_TEST_RESULT,
   );
   cm.setValue(before + editableText + after);
