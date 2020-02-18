@@ -1,10 +1,14 @@
 import { BLANK_USER, Puzzle, User } from '@rttw/common';
-import { Collection, Db, MongoClient, ObjectId } from 'mongodb';
+import { Collection, Db, MongoClient, MongoClientOptions, ObjectId } from 'mongodb';
 import { config } from './config';
 import ServerError from './errors';
 import { prepareDatabase } from './prepare-database';
 
 export type Config = typeof config;
+
+const MONGO_CLIENT_OPTIONS: MongoClientOptions = {
+  useUnifiedTopology: true,
+};
 
 export class Store {
   private _mongoClient: MongoClient;
@@ -20,7 +24,7 @@ export class Store {
 
   public static create(config: Config): Promise<Store> {
     return new Promise((resolve, reject) => {
-      MongoClient.connect(config.MONGO_URL, {}, async (err, mongoClient) => {
+      MongoClient.connect(config.MONGO_URL, MONGO_CLIENT_OPTIONS, async (err, mongoClient) => {
         if (err) {
           reject(err);
         } else {

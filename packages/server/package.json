@@ -26,7 +26,7 @@
     "build": "tsc --build --verbose ./tsconfig.json",
     "db:prepare": "rimraf build && mkdirp build/db",
     "postinstall": "yarn db:prepare",
-    "start:db": "mongod --dbpath build/db",
+    "start:db": "mongod --quiet --dbpath build/db",
     "start:server": "ts-node-dev --no-notify -r tsconfig-paths/register src/index.ts",
     "start": "concurrently --kill-others 'yarn start:db' 'sleep 1; yarn start:server'"
   }

@@ -3,33 +3,35 @@ import { createExpressApp } from './app';
 import { config } from './config';
 import log from './logger';
 import { Store } from './store';
-
-function terminate(fn: () => void, message: string) {
-  try {
-    log.info(chalk.yellow(message));
-    fn();
-  } catch (err) {
-    log.error(err);
-  }
-}
+import { runInCluster } from './cluster';
 
 async function main() {
-  const store = await Store.create(config);
-  const app = await createExpressApp(store);
+  const clusterOptions = {
+    ...(process.env.NODE_ENV === 'development' && { numberOfWorkers: 0 }),
+  };
 
-  // Start listening for connections
-  const server = app.listen(app.get('port'), () => {
-    log.success(`Listening at: http://localhost:${app.get('port')}/`);
-  });
+  runInCluster(async id => {
+    const workerId = id || 'master';
 
-  // Close the mongo connection and shut down the server when SIGINT received
-  process.on('SIGINT', () => {
-    console.error(chalk.red(' SIGINT'));
-    terminate(() => store.close(), 'Closing mongodb connection...');
-    terminate(() => server.close(), 'Shutting down server...');
-  });
+    const store = await Store.create(config);
+    const app = await createExpressApp(store);
+
+    const port = app.get('port');
+    const server = app.listen(port, () => {
+      log.success(`Thread(${workerId}) opened on port: ${port}`);
+    });
+
+    function handleTermination() {
+      console.error(chalk.red(`Shutting down thread(${workerId})`));
+      store.close();
+      server.close();
+    }
+
+    process.on('SIGINT', handleTermination);
+    process.on('SIGTERM', handleTermination);
+  }, clusterOptions);
 }
 
 if (require.main === module) {
-  main().then(console.log, console.error);
+  main().then(undefined, console.error);
 }
