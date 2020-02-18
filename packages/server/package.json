@@ -1,0 +1,30 @@
+{
+  "name": "rttw-server",
+  "version": "0.2.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^3.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.2",
+    "@types/mongodb": "^3.3.16",
+    "@types/node": "^12.12.27",
+    "concurrently": "^5.1.0",
+    "cross-env": "^7.0.0",
+    "mkdirp": "^1.0.3",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "build": "tsc --build --verbose ./tsconfig.json",
+    "db:prepare": "rimraf build && mkdirp build/db",
+    "postinstall": "yarn db:prepare",
+    "start:db": "mongod --dbpath build/db",
+    "start": "concurrently --kill-others 'yarn start:db' 'sleep 1; ts-node src/index.ts'"
+  }
+}

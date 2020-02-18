@@ -1,14 +1,12 @@
 # dependencies
-/client/node_modules
-/node_modules
+node_modules
 
 # testing
-/client/coverage
+/packages/**/coverage
 /coverage
 
 # production
-/client/build
-/server/build
+/packages/**/build
 /build
 
 # misc
