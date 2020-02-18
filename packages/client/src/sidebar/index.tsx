@@ -1,10 +1,10 @@
+import { Puzzle, User } from '@rttw/common';
 import { Collapsible, Box, Layer, Button, RadioButtonGroup, Text, Heading } from 'grommet';
 import { FormClose } from 'grommet-icons';
 import React, { ChangeEvent } from 'react';
 import { Status } from '../status';
 import { useStoreContext } from '../store';
 import { setShowSidebarAction, setSelectedPuzzleAction } from '../store/actions';
-import { Puzzle, User } from '../store/reducer';
 
 export interface PuzzleListProps {
   user: User;

@@ -1,9 +1,9 @@
+import { VIEWABLE_PUZZLE_COUNT, BLANK_USER, ApiGetPuzzlesResponse } from '@rttw/common';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import ServerError, { isServerError } from '../errors';
 import log from '../logger';
 import { Store } from '../store';
-import { VIEWABLE_PUZZLE_COUNT, BLANK_USER } from '../types';
 import { getSolvedPuzzleCount } from '../utils';
 
 export const apiPuzzlesId = (store: Store) => async (req: Request, res: Response) => {
@@ -28,5 +28,6 @@ export const apiPuzzlesId = (store: Store) => async (req: Request, res: Response
 
   // Find and return a sorted list of puzzle available to the user
   const puzzles = await store.getPuzzles(limit);
-  res.json({ puzzles, user });
+  const data: ApiGetPuzzlesResponse = { puzzles, user };
+  res.json(data);
 };

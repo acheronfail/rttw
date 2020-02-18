@@ -1,5 +1,5 @@
+import { Puzzle } from '@rttw/common';
 import { Editor } from 'codemirror';
-import { Puzzle } from '../store/reducer';
 import { getUserInput } from './utils';
 
 export interface TestResult {

@@ -1,4 +1,5 @@
-import { User, Puzzle, SolvedModalState } from './reducer';
+import { User, Puzzle } from '@rttw/common';
+import { SolvedModalState } from './reducer';
 
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const SET_SHOW_SIDEBAR = 'SET_SHOW_SIDEBAR';

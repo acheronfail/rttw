@@ -1,3 +1,4 @@
+import { User, Puzzle } from '@rttw/common';
 import {
   ActionPayload,
   SET_DARK_MODE,
@@ -9,17 +10,6 @@ import {
   SET_NEXT_UNSOLVED_PUZZLE,
   SET_SOLVED_MODAL_STATE,
 } from './actions';
-
-// TODO: separate package for types (share with server?)
-export interface Puzzle {
-  name: string;
-  source: string;
-}
-export interface User {
-  // TODO: map this to just `id` in the server
-  _id: string | null;
-  solutions: Record<string, string | undefined>;
-}
 
 export interface SolvedModalState {
   show: boolean;

@@ -1,11 +1,11 @@
-import { DocumentPuzzle } from '../src/types';
+import { Puzzle } from '@rttw/common';
 
 /**
  * These puzzles belong to the orignal author of Return True To Win.
  * https://alf.nu/ReturnTrue
  */
 
-export const season1: DocumentPuzzle[] = [
+export const season1: Puzzle[] = [
   {
     index: 0,
     name: 'id',

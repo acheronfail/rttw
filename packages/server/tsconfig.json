@@ -1,8 +1,14 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["../server/**/*.ts", "../server/**/*.json"],
+  "include": ["./**/*.ts", "./**/*.json"],
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "./build"
-  }
+    "outDir": "./build",
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "../common"
+    }
+  ]
 }

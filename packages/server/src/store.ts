@@ -1,17 +1,16 @@
+import { User, Puzzle, BLANK_USER } from '@rttw/common';
 import { MongoClient, ObjectId, Db, Collection } from 'mongodb';
-
 import { config } from './config';
 import ServerError from './errors';
 import { prepareDatabase } from './prepare-database';
-import { DocumentUser, DocumentPuzzle, BLANK_USER } from './types';
 
 export type Config = typeof config;
 
 export class Store {
   private _mongoClient: MongoClient;
   private _db: Db;
-  private _collectionUsers: Collection<DocumentUser>;
-  private _collectionPuzzles: Collection<DocumentPuzzle>;
+  private _collectionUsers: Collection<User>;
+  private _collectionPuzzles: Collection<Puzzle>;
   private constructor(mongoClient: MongoClient, db: Db) {
     this._mongoClient = mongoClient;
     this._db = db;
@@ -37,7 +36,7 @@ export class Store {
     this._mongoClient.close();
   }
 
-  public async getUser(id: ObjectId): Promise<DocumentUser> {
+  public async getUser(id: ObjectId): Promise<User> {
     return new Promise((resolve, reject) => {
       this._collectionUsers.find({ _id: new ObjectId(id) }).toArray((err, docs) => {
         if (err) {
@@ -60,7 +59,7 @@ export class Store {
     await this._collectionUsers.updateOne({ _id: id }, { $set: { [`solutions.${name}`]: solution } });
   }
 
-  public async getPuzzle(name: string): Promise<DocumentPuzzle> {
+  public async getPuzzle(name: string): Promise<Puzzle> {
     return new Promise((resolve, reject) => {
       this._collectionPuzzles.find({ name }).toArray((err, docs) => {
         if (err) {
@@ -74,7 +73,7 @@ export class Store {
     });
   }
 
-  public async getPuzzles(limit: number): Promise<DocumentPuzzle[]> {
+  public async getPuzzles(limit: number): Promise<Puzzle[]> {
     return new Promise((resolve, reject) => {
       this._collectionPuzzles
         .find()

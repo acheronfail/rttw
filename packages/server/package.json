@@ -1,5 +1,5 @@
 {
-  "name": "rttw-server",
+  "name": "@rttw/server",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
@@ -18,6 +18,8 @@
     "mkdirp": "^1.0.3",
     "rimraf": "^3.0.2",
     "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -25,6 +27,7 @@
     "db:prepare": "rimraf build && mkdirp build/db",
     "postinstall": "yarn db:prepare",
     "start:db": "mongod --dbpath build/db",
-    "start": "concurrently --kill-others 'yarn start:db' 'sleep 1; ts-node src/index.ts'"
+    "start:server": "ts-node-dev --no-notify -r tsconfig-paths/register src/index.ts",
+    "start": "concurrently --kill-others 'yarn start:db' 'sleep 1; yarn start:server'"
   }
 }

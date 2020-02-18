@@ -25,6 +25,9 @@
     "strictPropertyInitialization": false,
     "stripInternal": false,
     "target": "ES2017",
-    "typeRoots": ["./node_modules/@types", "./typings"]
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "paths": {
+      "@rttw/*": ["./packages/*/src"]
+    }
   }
 }

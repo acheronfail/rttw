@@ -1,18 +1,7 @@
+import { ApiGetPuzzlesResponse, ApiPostSubmitResponse } from '@rttw/common';
 import { Dispatch } from 'react';
 import { TestResult } from '../editor/eval';
 import { ActionPayload, setPuzzlesAction, setUserAction, setSolvedModalStateAction } from '../store/actions';
-import { User, Puzzle } from '../store/reducer';
-
-// TODO: share interfaces with server package
-interface GetPuzzlesResponse {
-  puzzles: Puzzle[];
-  user: User;
-}
-
-// TODO: share interfaces with server package
-interface PostSubmitResponse {
-  result: User;
-}
 
 type ServerResponse<T> = {
   response: Response;
@@ -28,7 +17,8 @@ const handleFetchResponse = async <T extends any>(response: Response): Promise<S
     return { response, data: (await response.text()) as any };
   }
 
-  throw new Error(response.statusText);
+  const responseText = await response.text().catch(e => e.message);
+  throw new Error(`${response.status} ${response.statusText} ${responseText}`);
 };
 
 const get = <T extends any>(url: string): Promise<ServerResponse<T>> => fetch(url).then(handleFetchResponse);
@@ -41,7 +31,7 @@ const post = <T extends any>(url: string, data: Record<string, any>): Promise<Se
   }).then(handleFetchResponse);
 
 export async function getPuzzles(id: string | null, dispatch: Dispatch<ActionPayload>) {
-  return get<GetPuzzlesResponse>(`/api/puzzles/${id || ''}`).then(({ data }) => {
+  return get<ApiGetPuzzlesResponse>(`/api/puzzles/${id || ''}`).then(({ data }) => {
     const { puzzles, user } = data;
     dispatch(setPuzzlesAction(puzzles));
     dispatch(setUserAction(user));
@@ -50,8 +40,8 @@ export async function getPuzzles(id: string | null, dispatch: Dispatch<ActionPay
 
 export async function submitSolution(id: string | null, result: TestResult, dispatch: Dispatch<ActionPayload>) {
   const { name, solution } = result;
-  return post<PostSubmitResponse>('/api/submit', { id, name, solution }).then(({ data }) => {
-    const { result: user } = data;
+  return post<ApiPostSubmitResponse>('/api/submit', { id, name, solution }).then(({ data }) => {
+    const { user } = data;
     dispatch(setUserAction(user));
 
     dispatch(
