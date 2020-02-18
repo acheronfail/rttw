@@ -1,7 +1,7 @@
 import { BLANK_USER, Puzzle, User } from '@rttw/common';
 import { Collection, Db, MongoClient, MongoClientOptions, ObjectId } from 'mongodb';
 import { config } from './config';
-import ServerError from './errors';
+import StoreError, { isStoreError } from './errors';
 import { prepareDatabase } from './prepare-database';
 
 export type Config = typeof config;
@@ -46,12 +46,26 @@ export class Store {
         if (err) {
           reject(err);
         } else if (docs.length == 0) {
-          reject(new ServerError(ServerError.ENOENT, 'no user found'));
+          reject(new StoreError(StoreError.ENOENT, 'no user found'));
         } else {
           resolve(docs[0]);
         }
       });
     });
+  }
+
+  public async getOrAddUser(id: ObjectId): Promise<User> {
+    try {
+      return await this.getUser(id);
+    } catch (err) {
+      // Create a new user if no user was found.
+      if (isStoreError(err) && err.code == StoreError.ENOENT) {
+        const { insertedId } = await this.addUser();
+        return await this.getUser(insertedId);
+      }
+
+      throw err;
+    }
   }
 
   public async addUser(): Promise<{ insertedId: ObjectId }> {
@@ -69,7 +83,7 @@ export class Store {
         if (err) {
           reject(err);
         } else if (docs.length == 0) {
-          reject(new ServerError(ServerError.ENOENT, 'no puzzle found'));
+          reject(new StoreError(StoreError.ENOENT, 'no puzzle found'));
         } else {
           resolve(docs[0]);
         }

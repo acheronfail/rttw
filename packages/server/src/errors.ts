@@ -1,4 +1,4 @@
-export default class ServerError extends Error {
+export default class StoreError extends Error {
   // Error for no entry found
   static ENOENT = 1 << 0;
 
@@ -10,7 +10,7 @@ export default class ServerError extends Error {
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ServerError);
+      Error.captureStackTrace(this, StoreError);
     }
 
     // Custom debugging information
@@ -19,4 +19,4 @@ export default class ServerError extends Error {
   }
 }
 
-export const isServerError = (err: Error) => err instanceof ServerError;
+export const isStoreError = (err: Error) => err instanceof StoreError;
