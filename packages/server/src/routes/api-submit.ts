@@ -1,9 +1,7 @@
-import { ApiPostSubmitRequest, ApiPostSubmitResponse, Puzzle, VIEWABLE_PUZZLE_COUNT, evalTemplate } from '@rttw/common';
-import { Request, Response } from 'express';
+import { ApiPostSubmitResponse, Puzzle, VIEWABLE_PUZZLE_COUNT, evalTemplate } from '@rttw/common';
 import { ObjectId } from 'mongodb';
 import { firefox } from 'playwright';
-import log from '../logger';
-import { Store } from '../store';
+import fastify from 'fastify';
 import { getSolvedPuzzleCount } from '../utils';
 
 // TODO: create concept of "services" to hold business logic (and instantiate dependencies).
@@ -17,33 +15,50 @@ async function validateSolution(puzzle: Puzzle, userInput: string): Promise<bool
   return result === true;
 }
 
-export const apiSubmit = (store: Store) => async (req: Request, res: Response) => {
-  // TODO: validate incoming requests
-  const { id, name, solution } = req.body as ApiPostSubmitRequest;
+export const apiSubmitRoute: fastify.RouteOptions = {
+  method: 'POST',
+  url: '/api/submit',
+  schema: {
+    // TODO: convert JSON schema to a TS type to have one source of truth
+    body: {
+      type: 'object',
+      required: ['name', 'solution'],
+      properties: {
+        id: {
+          type: 'string',
+        },
+        name: {
+          type: 'string',
+        },
+        solution: {
+          type: 'string',
+        },
+      },
+    },
+  },
+  handler: async function(request, reply): Promise<ApiPostSubmitResponse> {
+    const { id, name, solution } = request.body;
 
-  // TODO: logging middleware
-  log.api('/api/submit', `id: "${id}"`, `name: "${name}"`, `solution: "${solution}"`);
+    const user = await this.store.getOrAddUser(new ObjectId(id || undefined));
+    const limit = VIEWABLE_PUZZLE_COUNT + getSolvedPuzzleCount(user);
 
-  const user = await store.getOrAddUser(new ObjectId(id));
-  const limit = VIEWABLE_PUZZLE_COUNT + getSolvedPuzzleCount(user);
+    // Disallow submission if user doesn't have access to the puzzle,
+    const puzzle = await this.store.getPuzzle(name);
+    if (puzzle.index >= limit) {
+      reply.code(403);
+      throw new Error('User attempted to solve a puzzle without access');
+    }
 
-  // Disallow submission if user doesn't have access to the puzzle,
-  const puzzle = await store.getPuzzle(name);
-  if (puzzle.index >= limit) {
-    log.error(new Error('User attempted to solve a puzzle without access'));
-    return res.status(403).send();
-  }
+    const isSolutionValid = await validateSolution(puzzle, solution);
+    if (!isSolutionValid) {
+      reply.code(403);
+      throw new Error(`User solution failed: ${name} ${solution}`);
+    }
 
-  const isSolutionValid = await validateSolution(puzzle, solution);
-  if (!isSolutionValid) {
-    log.error(new Error(`User solution failed: ${name} ${solution}`));
-    return res.status(403).send();
-  }
-
-  // Update solution in db
-  await store.updateUserSolution(user._id, name, solution);
-  // Send back refreshed user data
-  const latestUser = await store.getUser(user._id);
-  const data: ApiPostSubmitResponse = { user: latestUser };
-  res.json(data);
+    // Update solution in db
+    await this.store.updateUserSolution(user._id, name, solution);
+    // Send back refreshed user data
+    const latestUser = await this.store.getUser(user._id);
+    return { user: latestUser };
+  },
 };

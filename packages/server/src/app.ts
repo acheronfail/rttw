@@ -1,18 +1,25 @@
-import bodyParser from 'body-parser';
-import express from 'express';
-import { apiPuzzlesId } from './routes/api-puzzles-id';
-import { apiSubmit } from './routes/api-submit';
+import http from 'http';
+import fastify from 'fastify';
+import { apiPuzzlesRoute } from './routes/api-puzzles-id';
+import { apiSubmitRoute } from './routes/api-submit';
 import { Store } from './store';
 
-export async function createExpressApp(store: Store) {
-  const app = express();
-  app.use(bodyParser.json());
-  app.set('port', process.env.PORT || 3001);
+// TODO: is there a better way to do this?
+declare module 'fastify' {
+  export interface FastifyInstance<
+    HttpServer = http.Server,
+    HttpRequest = http.IncomingMessage,
+    HttpResponse = http.ServerResponse
+  > {
+    store: Store;
+  }
+}
 
-  // Routes.
-  app.get('/api/puzzles/:id?', apiPuzzlesId(store));
-  app.post('/api/submit', apiSubmit(store));
-  app.get('*', (_, res) => res.sendStatus(418));
+export async function createServer(store: Store) {
+  const f = fastify({ logger: { prettyPrint: true } });
+  f.decorate('store', store);
+  f.route(apiPuzzlesRoute);
+  f.route(apiSubmitRoute);
 
-  return app;
+  return f;
 }

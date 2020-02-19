@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { createExpressApp } from './app';
+import { createServer } from './app';
 import { config } from './config';
 import log from './logger';
 import { Store } from './store';
@@ -14,17 +14,21 @@ async function main() {
     const workerId = id || 'master';
 
     const store = await Store.create(config);
-    const app = await createExpressApp(store);
+    const app = await createServer(store);
 
-    const port = app.get('port');
-    const server = app.listen(port, () => {
+    const port = 3001;
+    app.listen(port, err => {
+      if (err) {
+        throw err;
+      }
+
       log.success(`Thread(${workerId}) opened on port: ${port}`);
     });
 
     function handleTermination() {
       console.error(chalk.red(`Shutting down thread(${workerId})`));
       store.close();
-      server.close();
+      app.close();
     }
 
     process.on('SIGINT', handleTermination);

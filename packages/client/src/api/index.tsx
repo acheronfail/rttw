@@ -31,7 +31,13 @@ const post = <T extends any>(url: string, data: Record<string, any>): Promise<Se
   }).then(handleFetchResponse);
 
 export async function getPuzzles(id: string | null, dispatch: Dispatch<ActionPayload>) {
-  return get<ApiGetPuzzlesResponse>(`/api/puzzles/${id || ''}`).then(({ data }) => {
+  const query = new URLSearchParams();
+  if (id) {
+    query.append('id', id);
+  }
+  const queryString = query.toString();
+
+  return get<ApiGetPuzzlesResponse>(`/api/puzzles${queryString ? `?${queryString}` : ''}`).then(({ data }) => {
     const { puzzles, user } = data;
     dispatch(setPuzzlesAction(puzzles));
     dispatch(setUserAction(user));
