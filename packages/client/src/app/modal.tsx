@@ -27,7 +27,7 @@ export function SolvedModal() {
 
   return (
     <Layer onEsc={closeModal} onClickOutside={closeModal} animation="fadeIn">
-      <Keyboard target="document" onEnter={closeModal} onEsc={closeModal}>
+      <Keyboard target="document" onEsc={closeModal}>
         <Box fill pad="medium" round="small" elevation="large">
           <Box fill pad={{ horizontal: 'medium', vertical: 'small' }} align="center" justify="center">
             <Markdown>{modalMessage(solutionLength)}</Markdown>
