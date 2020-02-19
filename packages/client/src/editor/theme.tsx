@@ -1,5 +1,3 @@
-// TODO: get from meta tags?
-
 export const themes = [
   'default', // CodeMirror's default theme.
   '3024-day',
