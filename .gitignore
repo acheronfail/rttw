@@ -6,8 +6,8 @@ node_modules
 /coverage
 
 # production
-/packages/**/build
-/build
+/packages/**/dist
+/dist
 
 # misc
 .DS_Store
@@ -19,6 +19,10 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.parcel-cache
+.cache
+.yarn
 
 # Editor
 .vscode

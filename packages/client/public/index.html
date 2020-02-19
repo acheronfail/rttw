@@ -2,11 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="description" content="Return true to win!" />
+    <link rel="apple-touch-icon" href="./logo192.png" />
+    <style>
+      /* NOTE: right now parcel has issues importing without direct paths */
+      @import '../../../node_modules/codemirror/theme/3024-day.css';
+      @import '../../../node_modules/codemirror/theme/3024-night.css';
+      @import '../../../node_modules/codemirror/theme/abcdef.css';
+      @import '../../../node_modules/codemirror/theme/ambiance.css';
+      @import '../../../node_modules/codemirror/theme/ambiance-mobile.css';
+      @import '../../../node_modules/codemirror/theme/ayu-dark.css';
+      @import '../../../node_modules/codemirror/theme/ayu-mirage.css';
+      @import '../../../node_modules/codemirror/theme/base16-dark.css';
+      @import '../../../node_modules/codemirror/theme/base16-light.css';
+      @import '../../../node_modules/codemirror/theme/bespin.css';
+      @import '../../../node_modules/codemirror/theme/blackboard.css';
+      @import '../../../node_modules/codemirror/theme/cobalt.css';
+      @import '../../../node_modules/codemirror/theme/colorforth.css';
+      @import '../../../node_modules/codemirror/theme/darcula.css';
+      @import '../../../node_modules/codemirror/theme/dracula.css';
+      @import '../../../node_modules/codemirror/theme/duotone-dark.css';
+      @import '../../../node_modules/codemirror/theme/duotone-light.css';
+      @import '../../../node_modules/codemirror/theme/eclipse.css';
+      @import '../../../node_modules/codemirror/theme/elegant.css';
+      @import '../../../node_modules/codemirror/theme/erlang-dark.css';
+      @import '../../../node_modules/codemirror/theme/gruvbox-dark.css';
+      @import '../../../node_modules/codemirror/theme/hopscotch.css';
+      @import '../../../node_modules/codemirror/theme/icecoder.css';
+      @import '../../../node_modules/codemirror/theme/idea.css';
+      @import '../../../node_modules/codemirror/theme/isotope.css';
+      @import '../../../node_modules/codemirror/theme/lesser-dark.css';
+      @import '../../../node_modules/codemirror/theme/liquibyte.css';
+      @import '../../../node_modules/codemirror/theme/lucario.css';
+      @import '../../../node_modules/codemirror/theme/material.css';
+      @import '../../../node_modules/codemirror/theme/material-darker.css';
+      @import '../../../node_modules/codemirror/theme/material-ocean.css';
+      @import '../../../node_modules/codemirror/theme/material-palenight.css';
+      @import '../../../node_modules/codemirror/theme/mbo.css';
+      @import '../../../node_modules/codemirror/theme/mdn-like.css';
+      @import '../../../node_modules/codemirror/theme/midnight.css';
+      @import '../../../node_modules/codemirror/theme/monokai.css';
+      @import '../../../node_modules/codemirror/theme/moxer.css';
+      @import '../../../node_modules/codemirror/theme/neat.css';
+      @import '../../../node_modules/codemirror/theme/neo.css';
+      @import '../../../node_modules/codemirror/theme/night.css';
+      @import '../../../node_modules/codemirror/theme/nord.css';
+      @import '../../../node_modules/codemirror/theme/oceanic-next.css';
+      @import '../../../node_modules/codemirror/theme/panda-syntax.css';
+      @import '../../../node_modules/codemirror/theme/paraiso-dark.css';
+      @import '../../../node_modules/codemirror/theme/paraiso-light.css';
+      @import '../../../node_modules/codemirror/theme/pastel-on-dark.css';
+      @import '../../../node_modules/codemirror/theme/railscasts.css';
+      @import '../../../node_modules/codemirror/theme/rubyblue.css';
+      @import '../../../node_modules/codemirror/theme/seti.css';
+      @import '../../../node_modules/codemirror/theme/shadowfox.css';
+      @import '../../../node_modules/codemirror/theme/solarized.css';
+      @import '../../../node_modules/codemirror/theme/ssms.css';
+      @import '../../../node_modules/codemirror/theme/the-matrix.css';
+      @import '../../../node_modules/codemirror/theme/tomorrow-night-bright.css';
+      @import '../../../node_modules/codemirror/theme/tomorrow-night-eighties.css';
+      @import '../../../node_modules/codemirror/theme/ttcn.css';
+      @import '../../../node_modules/codemirror/theme/twilight.css';
+      @import '../../../node_modules/codemirror/theme/vibrant-ink.css';
+      @import '../../../node_modules/codemirror/theme/xq-dark.css';
+      @import '../../../node_modules/codemirror/theme/xq-light.css';
+      @import '../../../node_modules/codemirror/theme/yeti.css';
+      @import '../../../node_modules/codemirror/theme/yonce.css';
+      @import '../../../node_modules/codemirror/theme/zenburn.css';
+    </style>
     <style>
       body {
         margin: 0;
@@ -20,30 +86,12 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    <link rel="manifest" href="./manifest.json" />
     <title>RTTW</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <script src="../src/index.tsx"></script>
   </body>
 </html>

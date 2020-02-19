@@ -4,17 +4,10 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react",
+    "jsx": "preserve",
     "allowJs": true,
     "module": "esnext",
     "noEmit": true,
-    "isolatedModules": true,
-    "typeRoots": ["./node_modules/@types", "../../typings"],
-    "composite": true
-  },
-  "references": [
-    {
-      "path": "../common"
-    }
-  ]
+    "isolatedModules": true
+  }
 }

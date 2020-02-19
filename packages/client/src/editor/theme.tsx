@@ -1,3 +1,5 @@
+// TODO: get from meta tags?
+
 export const themes = [
   'default', // CodeMirror's default theme.
   '3024-day',
@@ -64,10 +66,3 @@ export const themes = [
   'yonce',
   'zenburn',
 ];
-
-for (let i = 0; i < themes.length; ++i) {
-  const theme = themes[i];
-  if (theme !== 'default') {
-    require(`codemirror/theme/${theme}.css`);
-  }
-}

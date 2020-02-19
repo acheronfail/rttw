@@ -3,10 +3,12 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
+    "@rttw/common": "0.1.0",
     "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "express": "^4.17.1",
-    "mongodb": "^3.5.3"
+    "mongodb": "^3.5.3",
+    "playwright": "^0.11.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -24,9 +26,9 @@
   },
   "scripts": {
     "build": "tsc --build --verbose ./tsconfig.json",
-    "db:prepare": "rimraf build && mkdirp build/db",
+    "db:prepare": "rimraf dist && mkdirp dist/db",
     "postinstall": "yarn db:prepare",
-    "start:db": "mongod --quiet --dbpath build/db",
+    "start:db": "mongod --quiet --dbpath dist/db",
     "start:server": "ts-node-dev --no-notify -r tsconfig-paths/register src/index.ts",
     "start": "concurrently --kill-others 'yarn start:db' 'sleep 1; yarn start:server'"
   }

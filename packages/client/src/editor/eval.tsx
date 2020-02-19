@@ -1,4 +1,4 @@
-import { Puzzle } from '@rttw/common';
+import { Puzzle, evalTemplate } from '@rttw/common';
 import { Editor } from 'codemirror';
 import { getUserInput } from './utils';
 
@@ -25,20 +25,7 @@ function runInIframe(puzzle: Puzzle, userInput: string) {
   document.body.appendChild(iframe);
 
   try {
-    const javascript = `(function () {
-
-${puzzle.source};
-
-  window['${puzzle.name}'] = ${puzzle.name};
-
-  if (window.verifyInput) {
-    window.verifyInput(${JSON.stringify(userInput)});
-  }
-
-})();
-
-    ${puzzle.name}(${userInput})
-    `;
+    const javascript = evalTemplate(puzzle, userInput);
 
     // TODO: for some reason the `eval()` type doesn't exist in TypeScript?
     const result = (iframe.contentWindow as any)?.eval(javascript);

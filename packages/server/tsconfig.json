@@ -3,7 +3,7 @@
   "include": ["./**/*.ts", "./**/*.json"],
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "./build",
+    "outDir": "./dist",
     "composite": true
   },
   "references": [

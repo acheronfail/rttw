@@ -12,6 +12,7 @@ export async function createExpressApp(store: Store) {
   // Routes.
   app.get('/api/puzzles/:id?', apiPuzzlesId(store));
   app.post('/api/submit', apiSubmit(store));
+  app.get('*', (_, res) => res.sendStatus(418));
 
   return app;
 }

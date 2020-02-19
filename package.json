@@ -33,12 +33,18 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:prettier --write",
     "lint:prettier": "prettier '**/*.{json,md}'",
     "lint": "yarn lint:eslint && yarn lint:prettier --check",
-    "postinstall": "yarn client && yarn server",
     "precommit": "lint-staged",
     "server:build": "yarn server build",
     "server:start": "yarn server start",
     "server": "node scripts/yarn-in-dir.js packages/server",
     "start": "concurrently --kill-others 'yarn server:start' 'yarn client:start'"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/client",
+      "packages/common",
+      "packages/server"
+    ]
   },
   "husky": {
     "hooks": {
