@@ -19,7 +19,7 @@ function App({ urlParams }: AppProps) {
 
   // Fetch initial puzzles.
   useEffect(() => {
-    getPuzzles(urlParams.get('id'), dispatch).then(() => {
+    getPuzzles(urlParams.get('id') || undefined, dispatch).then(() => {
       // Select first unsolved puzzle.
       dispatch(setNextUnsolvedPuzzleAction());
     });

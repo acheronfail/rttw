@@ -56,7 +56,7 @@ export const initialState: State = {
 
   server: {
     user: {
-      _id: null,
+      _id: undefined,
       solutions: {},
     },
     puzzles: [],

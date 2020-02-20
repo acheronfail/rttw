@@ -1,7 +1,5 @@
-import { ApiPostSubmitResponse, Puzzle, VIEWABLE_PUZZLE_COUNT, evalTemplate } from '@rttw/common';
-import { ObjectId } from 'mongodb';
+import { ApiSubmitResponse, ApiSubmitRouteOptions, Puzzle, constants, evalTemplate, schemas } from '@rttw/common';
 import { firefox } from 'playwright';
-import fastify from 'fastify';
 import { getSolvedPuzzleCount } from '../utils';
 
 // TODO: create concept of "services" to hold business logic (and instantiate dependencies).
@@ -15,32 +13,16 @@ async function validateSolution(puzzle: Puzzle, userInput: string): Promise<bool
   return result === true;
 }
 
-export const apiSubmitRoute: fastify.RouteOptions = {
+export const apiSubmitRoute: ApiSubmitRouteOptions = {
   method: 'POST',
   url: '/api/submit',
-  schema: {
-    // TODO: convert JSON schema to a TS type to have one source of truth
-    body: {
-      type: 'object',
-      required: ['name', 'solution'],
-      properties: {
-        id: {
-          type: 'string',
-        },
-        name: {
-          type: 'string',
-        },
-        solution: {
-          type: 'string',
-        },
-      },
-    },
-  },
-  handler: async function(request, reply): Promise<ApiPostSubmitResponse> {
+  schema: schemas.routes.apiSubmit,
+  handler: async function(request, reply): Promise<ApiSubmitResponse> {
     const { id, name, solution } = request.body;
+    console.log(request.body);
 
-    const user = await this.store.getOrAddUser(new ObjectId(id || undefined));
-    const limit = VIEWABLE_PUZZLE_COUNT + getSolvedPuzzleCount(user);
+    const user = await this.store.getOrAddUser(id);
+    const limit = constants.VIEWABLE_PUZZLE_COUNT + getSolvedPuzzleCount(user);
 
     // Disallow submission if user doesn't have access to the puzzle,
     const puzzle = await this.store.getPuzzle(name);
@@ -56,9 +38,10 @@ export const apiSubmitRoute: fastify.RouteOptions = {
     }
 
     // Update solution in db
-    await this.store.updateUserSolution(user._id, name, solution);
+    await this.store.updateUserSolution(user._id.toHexString(), name, solution);
+
     // Send back refreshed user data
-    const latestUser = await this.store.getUser(user._id);
+    const latestUser = await this.store.getUser(user._id.toHexString());
     return { user: latestUser };
   },
 };

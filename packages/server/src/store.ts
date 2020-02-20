@@ -1,20 +1,20 @@
-import { BLANK_USER, Puzzle, User } from '@rttw/common';
+import { Puzzle, User, constants } from '@rttw/common';
 import { Collection, Db, MongoClient, MongoClientOptions, ObjectId } from 'mongodb';
 import { season1 } from '../puzzles/season1';
 import { season2 } from '../puzzles/season2';
-import { config } from './config';
+import { Config } from './config';
 import StoreError, { isStoreError } from './errors';
-
-export type Config = typeof config;
 
 const MONGO_CLIENT_OPTIONS: MongoClientOptions = {
   useUnifiedTopology: true,
 };
 
+export type UserDocument = Omit<User, '_id'> & { _id: ObjectId };
+
 export class Store {
   private _mongoClient: MongoClient;
   private _db: Db;
-  private _collectionUsers: Collection<User>;
+  private _collectionUsers: Collection<UserDocument>;
   private _collectionPuzzles: Collection<Puzzle>;
   private constructor(mongoClient: MongoClient, db: Db) {
     this._mongoClient = mongoClient;
@@ -48,55 +48,48 @@ export class Store {
     this._mongoClient.close();
   }
 
-  public async getUser(id: ObjectId): Promise<User> {
-    return new Promise((resolve, reject) => {
-      this._collectionUsers.find({ _id: new ObjectId(id) }).toArray((err, docs) => {
-        if (err) {
-          reject(err);
-        } else if (docs.length == 0) {
-          reject(new StoreError(StoreError.ENOENT, 'no user found'));
-        } else {
-          resolve(docs[0]);
-        }
-      });
-    });
+  public async getUser(id?: string): Promise<UserDocument> {
+    const docs = await this._collectionUsers.find({ _id: new ObjectId(id) }).toArray();
+    if (docs.length === 0) {
+      throw new StoreError(StoreError.ENOENT, 'no user found');
+    }
+
+    return docs[0];
   }
 
-  public async getOrAddUser(id: ObjectId): Promise<User> {
+  public async getOrAddUser(id?: string): Promise<UserDocument> {
     try {
       return await this.getUser(id);
     } catch (err) {
       // Create a new user if no user was found.
       if (isStoreError(err) && err.code == StoreError.ENOENT) {
         const { insertedId } = await this.addUser();
-        return await this.getUser(insertedId);
+        return await this.getUser(insertedId as any);
       }
 
       throw err;
     }
   }
 
-  public async addUser(): Promise<{ insertedId: ObjectId }> {
-    const { insertedId } = await this._collectionUsers.insertOne(Object.assign({}, BLANK_USER));
-    return { insertedId };
+  public async addUser(): Promise<{ insertedId: string }> {
+    const { insertedId } = await this._collectionUsers.insertOne({
+      ...constants.BLANK_USER,
+      _id: undefined,
+    });
+    return { insertedId: insertedId.toHexString() };
   }
 
-  public async updateUserSolution(id: ObjectId, name: string, solution: string): Promise<void> {
-    await this._collectionUsers.updateOne({ _id: id }, { $set: { [`solutions.${name}`]: solution } });
+  public async updateUserSolution(id: string | undefined, name: string, solution: string): Promise<void> {
+    await this._collectionUsers.updateOne({ _id: new ObjectId(id) }, { $set: { [`solutions.${name}`]: solution } });
   }
 
   public async getPuzzle(name: string): Promise<Puzzle> {
-    return new Promise((resolve, reject) => {
-      this._collectionPuzzles.find({ name }).toArray((err, docs) => {
-        if (err) {
-          reject(err);
-        } else if (docs.length == 0) {
-          reject(new StoreError(StoreError.ENOENT, 'no puzzle found'));
-        } else {
-          resolve(docs[0]);
-        }
-      });
-    });
+    const docs = await this._collectionPuzzles.find({ name }).toArray();
+    if (docs.length === 0) {
+      throw new StoreError(StoreError.ENOENT, 'no puzzle found');
+    }
+
+    return docs[0];
   }
 
   public async getPuzzles(limit: number): Promise<Puzzle[]> {

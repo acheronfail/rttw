@@ -28,6 +28,8 @@
     "client:build": "yarn client build",
     "client:start": "yarn client start",
     "client": "node scripts/yarn-in-dir.js packages/client",
+    "common": "node scripts/yarn-in-dir.js packages/common",
+    "common:build": "yarn common build",
     "lint:eslint:errors": "yarn lint:eslint --quiet",
     "lint:eslint": "eslint '{packages,scripts}/**/*.{j,t}s{,x}' '*.js'",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:prettier --write",
