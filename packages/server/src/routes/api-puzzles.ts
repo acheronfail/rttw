@@ -1,6 +1,5 @@
-import { ApiPuzzlesResponse, ApiPuzzlesRouteOptions, constants, schemas } from '@rttw/common';
+import { ApiPuzzlesResponse, ApiPuzzlesRouteOptions, constants, getSolvedPuzzleCount, schemas } from '@rttw/common';
 import StoreError, { isStoreError } from '../errors';
-import { getSolvedPuzzleCount } from '../utils';
 
 export const apiPuzzlesRoute: ApiPuzzlesRouteOptions = {
   method: 'GET',
