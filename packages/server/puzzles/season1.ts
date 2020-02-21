@@ -37,20 +37,6 @@ function infinity(x, y) {
   },
   {
     index: 4,
-    name: 'tryCatch',
-    source: `function tryCatch(fn) {
-  try {
-    fn();
-    return false;
-  } catch (error) {
-    return false;
-  } finally {
-    return fn();
-  }
-}`,
-  },
-  {
-    index: 5,
     name: 'counter',
     source: `function counter(f) {
   var a = f(), b = f();
@@ -59,14 +45,14 @@ function infinity(x, y) {
 }`,
   },
   {
-    index: 6,
+    index: 5,
     name: 'peano',
     source: `function peano(x) {
   return (x++ !== x) && (x++ === x);
 }`,
   },
   {
-    index: 7,
+    index: 6,
     name: 'array',
     source: `function array(x,y) {
   return Array.isArray(x) && !(x instanceof Array) &&
@@ -74,14 +60,14 @@ function infinity(x, y) {
 }`,
   },
   {
-    index: 8,
+    index: 7,
     name: 'instance',
     source: `function instance(x,y) {
   return x instanceof y && y instanceof x && x !== y;
 }`,
   },
   {
-    index: 9,
+    index: 8,
     name: 'instance2',
     source: `function instance2(a,b,c) {
   return a !== b && b !== c && a !== c
@@ -91,49 +77,49 @@ function infinity(x, y) {
 }`,
   },
   {
-    index: 10,
+    index: 9,
     name: 'proto1',
     source: `function proto1(x) {
   return x && !("__proto__" in x);
 }`,
   },
   {
-    index: 11,
+    index: 10,
     name: 'undef',
     source: `function undef(x) {
   return !{ undefined: { undefined: 1 } }[typeof x][x];
 }`,
   },
   {
-    index: 12,
+    index: 11,
     name: 'symmetric',
     source: `function symmetric(x,y) {
   return x == y && y != x;
 }`,
   },
   {
-    index: 13,
+    index: 12,
     name: 'ouroborobj',
     source: `function ouroborobj(x) {
   return x in x;
 }`,
   },
   {
-    index: 14,
+    index: 13,
     name: 'truth',
     source: `function truth(x) {
   return x.valueOf() && !x;
 }`,
   },
   {
-    index: 15,
+    index: 14,
     name: 'wat',
     source: `function wat(x) {
   return x('hello') == 'world:)' && !x;
 }`,
   },
   {
-    index: 16,
+    index: 15,
     name: 'evil1',
     source: `var eval = window.eval;
 function evil1(x) {
@@ -141,7 +127,7 @@ function evil1(x) {
 }`,
   },
   {
-    index: 17,
+    index: 16,
     name: 'evil2',
     source: `var eval = window.eval;
 function evil2(x) {
@@ -149,7 +135,7 @@ function evil2(x) {
 }`,
   },
   {
-    index: 18,
+    index: 17,
     name: 'evil3',
     source: `var eval = window.eval;
 function evil3(parameter) {
@@ -158,14 +144,14 @@ function evil3(parameter) {
 }`,
   },
   {
-    index: 19,
+    index: 18,
     name: 'random1',
     source: `function random1(x) {
   return Math.random() in x;
 }`,
   },
   {
-    index: 20,
+    index: 19,
     name: 'random2',
     source: `var rand = Math.random();
 function random2(x) {
@@ -173,7 +159,7 @@ function random2(x) {
 }`,
   },
   {
-    index: 21,
+    index: 20,
     name: 'random3',
     source: `var key = crypto.getRandomValues(new Uint32Array(4));
 function random3(x) {
@@ -185,7 +171,7 @@ function random3(x) {
 }`,
   },
   {
-    index: 22,
+    index: 21,
     name: 'random4',
     source: `var rand = Math.random();
 function random4(x) {
@@ -193,14 +179,14 @@ function random4(x) {
 }`,
   },
   {
-    index: 23,
+    index: 22,
     name: 'total',
     source: `function total(x) {
   return (x < x) && (x == x) && (x > x);
 }`,
   },
   {
-    index: 24,
+    index: 23,
     name: 'json',
     source: `// submitted by azzola
 const secrets = new Uint32Array(2);

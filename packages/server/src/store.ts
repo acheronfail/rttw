@@ -1,7 +1,7 @@
 import { Puzzle, User, constants } from '@rttw/common';
 import { Collection, Db, MongoClient, MongoClientOptions, ObjectId } from 'mongodb';
-import { season1 } from '../puzzles/season1';
-import { season2 } from '../puzzles/season2';
+import { acheronfail, season1, season2 } from '../puzzles';
+
 import { Config } from './config';
 import StoreError, { isStoreError } from './errors';
 
@@ -26,7 +26,7 @@ export class Store {
   // TODO: Don't delete puzzles each time the database is restarted.
   private async prepare(): Promise<void> {
     await this._collectionPuzzles.deleteMany({});
-    await this._collectionPuzzles.insertMany(season1.concat(season2));
+    await this._collectionPuzzles.insertMany(season1.concat(season2).concat(acheronfail));
   }
 
   public static create(config: Config): Promise<Store> {
