@@ -4,6 +4,7 @@ import { config } from './config';
 import log from './logger';
 import { Store } from './store';
 import { runInCluster } from './cluster';
+import { ExitCode } from './constants';
 
 async function main() {
   const clusterOptions = {
@@ -25,17 +26,24 @@ async function main() {
       log.success(`Thread(${workerId}) opened on port: ${port}`);
     });
 
-    function handleTermination() {
+    async function handleTermination(err?: Error, code = 0) {
       console.error(chalk.red(`Shutting down thread(${workerId})`));
-      store.close();
-      app.close();
+      await Promise.all([store.close(), app.close()]);
+      process.exit(code);
     }
 
-    process.on('SIGINT', handleTermination);
-    process.on('SIGTERM', handleTermination);
+    process.on('SIGINT', () => handleTermination(undefined, ExitCode.Termination));
+    process.on('SIGTERM', () => handleTermination(undefined, ExitCode.Termination));
+    process.on('uncaughtException', err => handleTermination(err, ExitCode.UncaughtException));
+    process.on('unhandledRejection', reason =>
+      handleTermination(new Error(`unhandledRejection: ${reason?.toString()}`), ExitCode.UnhandledRejection),
+    );
   }, clusterOptions);
 }
 
 if (require.main === module) {
-  main().then(undefined, console.error);
+  main().then(undefined, err => {
+    console.error(err);
+    process.exit(ExitCode.ApplicationError);
+  });
 }

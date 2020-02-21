@@ -44,8 +44,8 @@ export class Store {
     });
   }
 
-  public close() {
-    this._mongoClient.close();
+  public async close() {
+    await this._mongoClient.close();
   }
 
   public async getUser(id?: string): Promise<UserDocument> {
