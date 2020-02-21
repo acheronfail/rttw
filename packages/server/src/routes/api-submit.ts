@@ -1,6 +1,13 @@
-import { ApiSubmitResponse, ApiSubmitRouteOptions, Puzzle, constants, evalTemplate, schemas } from '@rttw/common';
+import {
+  ApiSubmitResponse,
+  ApiSubmitRouteOptions,
+  Puzzle,
+  constants,
+  evalTemplate,
+  getSolvedPuzzleCount,
+  schemas,
+} from '@rttw/common';
 import { firefox } from 'playwright';
-import { getSolvedPuzzleCount } from '../utils';
 
 // TODO: create concept of "services" to hold business logic (and instantiate dependencies).
 const browser = firefox.launch({ headless: true });

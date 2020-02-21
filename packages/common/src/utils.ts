@@ -1,4 +1,4 @@
-import { Puzzle } from './types';
+import { Puzzle, User } from './types.generated';
 
 // TODO: protect against the user modifying the function.
 export function evalTemplate(puzzle: Puzzle, userInput: string) {
@@ -20,4 +20,8 @@ if (window.verifyInput) {
 // Run function with the user's input.
 ${puzzle.name}(${userInput});
 `;
+}
+
+export function getSolvedPuzzleCount(user: User): number {
+  return Object.keys(user.solutions).length;
 }
