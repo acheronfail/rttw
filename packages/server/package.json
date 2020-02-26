@@ -7,7 +7,6 @@
     "chalk": "^3.0.0",
     "change-case": "^4.1.1",
     "fastify": "^2.12.0",
-    "json-schema-to-typescript": "^8.0.1",
     "mongodb": "^3.5.3",
     "playwright": "^0.11.1"
   },

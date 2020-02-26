@@ -4,7 +4,9 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "build": "ts-node ./scripts/build-types.ts",
+    "build:typescript": "tsc --build --verbose ./tsconfig.json",
+    "build:types": "ts-node ./scripts/build-types.ts",
+    "build": "yarn build:types && yarn build:typescript",
     "postinstall": "yarn build"
   },
   "dependencies": {},

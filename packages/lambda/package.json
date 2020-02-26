@@ -1,0 +1,17 @@
+{
+  "name": "@rttw/lambda",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build --verbose ./tsconfig.json",
+    "compile": "for x in $(ls src); do tsc --module system --outFile dist/${x}.bundle.js src/${x}; done"
+  },
+  "dependencies": {
+    "@rttw/common": "0.1.0",
+    "playwright": "^0.11.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.44",
+    "typescript": "^3.7.5"
+  }
+}

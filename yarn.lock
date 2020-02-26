@@ -1774,6 +1774,11 @@
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
   integrity sha1-KtToRBdaNzjLnnBkvl6gcLiGOhw=
 
+"@types/aws-lambda@^8.10.44":
+  version "8.10.44"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/aws-lambda/-/aws-lambda-8.10.44.tgz#b50fe6568290bab258b92ab62c3029df66e7a1df"
+  integrity sha1-tQ/mVoKQurJYuSq2LDAp32bnod8=
+
 "@types/bson@*":
   version "4.0.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/bson/-/bson-4.0.1.tgz#2bfc80819e7055b76d5496d5344ed23e5d12bbb2"

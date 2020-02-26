@@ -24,12 +24,14 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "build": "concurrently 'yarn client:build' 'yarn server:build'",
+    "build": "concurrently 'yarn client:build' 'yarn server:build' 'yarn lambda:build'",
     "client:build": "yarn client build",
     "client:start": "yarn client start",
     "client": "node scripts/yarn-in-dir.js packages/client",
     "common": "node scripts/yarn-in-dir.js packages/common",
     "common:build": "yarn common build",
+    "lambda:build": "yarn lambda build",
+    "lambda": "node scripts/yarn-in-dir.js packages/lambda",
     "lint:eslint:errors": "yarn lint:eslint --quiet",
     "lint:eslint": "eslint '{packages,scripts}/**/*.{j,t}s{,x}' '*.js'",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:prettier --write",
@@ -45,6 +47,7 @@
     "packages": [
       "packages/client",
       "packages/common",
+      "packages/lambda",
       "packages/server"
     ]
   },

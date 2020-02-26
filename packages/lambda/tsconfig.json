@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./**/*.ts"],
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "../common"
+    }
+  ]
+}
