@@ -1,0 +1,10 @@
+name: rttw
+root: .
+
+windows:
+  - rttw:
+      layout: tiled
+      panes:
+        - yarn server start:server
+        - yarn server start:db
+        - yarn client start

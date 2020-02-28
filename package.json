@@ -39,7 +39,7 @@
     "server:build": "yarn server build",
     "server:start": "yarn server start",
     "server": "node scripts/yarn-in-dir.js packages/server",
-    "start": "concurrently --kill-others 'yarn server:start' 'yarn client:start'"
+    "start": "tmuxinator'"
   },
   "workspaces": {
     "packages": [
