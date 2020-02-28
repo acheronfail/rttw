@@ -2,7 +2,7 @@ import { Puzzle } from '@rttw/common/src';
 
 export const acheronfail: Puzzle[] = [
   {
-    index: 0,
+    index: 50,
     name: 'tryCatch',
     source: `function tryCatch(fn) {
   try {

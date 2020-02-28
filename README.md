@@ -28,5 +28,5 @@ yarn # install dependencies, link packages in workspace together
 And to start a local development server, run:
 
 ```bash
-yarn start # This will start MongoDB, the server and the client
+yarn start # Requires `tmuxinator` to be installed
 ```

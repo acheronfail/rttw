@@ -1,5 +1,7 @@
 import { JSONSchema } from 'json-schema-to-typescript';
 
+// TODO: move leaderboard into the puzzle doc itself
+
 export const leaderboardEntry: JSONSchema = {
   type: 'object',
   required: ['username', 'length', 'date'],

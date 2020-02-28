@@ -13,21 +13,21 @@ const EMPTY_TEST_RESULT: TestResult = {
   solution: '',
   error: '<no input>',
 };
-const MARKER_BEFORE_OPTIONS = {
+const MARKER_BEFORE_OPTIONS: TextMarkerOptions = {
   inclusiveLeft: true,
   readOnly: true,
   atomic: true,
   title: TITLE_MARKER_BEFORE,
   css: READ_ONLY_CSS,
 };
-const MARKER_AFTER_OPTIONS = {
+const MARKER_AFTER_OPTIONS: TextMarkerOptions = {
   inclusiveRight: true,
   readOnly: true,
   atomic: true,
   title: TITLE_MARKER_AFTER,
   css: READ_ONLY_CSS,
 };
-const MARKER_EDITABLE_OPTIONS = {
+const MARKER_EDITABLE_OPTIONS: TextMarkerOptions = {
   clearWhenEmpty: false,
   readOnly: false,
   title: TITLE_MARKER_EDITABLE,
@@ -92,6 +92,7 @@ export function updateResultInCodeMirror(cm: Editor, result: TestResult) {
   cm.markText(range.from, lastPos(cm), MARKER_AFTER_OPTIONS);
 }
 
+// FIXME: undo history is broken
 export function renderPuzzleIntoCodeMirror(options: RenderPuzzleIntoCodeMirrorOptions) {
   const { cm, puzzle, previousSolution = '', onChanges } = options;
 

@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "tsc --build --verbose ./tsconfig.json",
-    "db:prepare": "rimraf dist && mkdirp dist/db",
+    "db:clean": "rimraf dist/db",
+    "db:prepare": "mkdirp dist/db",
     "postinstall": "yarn db:prepare",
     "start:db": "mongod --quiet --dbpath dist/db",
     "start:server": "ts-node-dev --no-notify -r tsconfig-paths/register src/index.ts",
